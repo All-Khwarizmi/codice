@@ -43,7 +43,7 @@ export default async function handler(
   // Rest of the API logic
   const message = `
   This is this body of the message...
-
+  "env.NEXT_PUBLIC_DISCORD_WEBHOOK_URI"
   `;
   /*   const axiosConfig = {
     method: "POST",
@@ -73,12 +73,15 @@ export default async function handler(
     headers: {
       "Content-Type": "application/json",
     },
-    body: JSON.stringify({"content": message}),
+    body: message,
   };
-  const response = await fetch(env.NEXT_PUBLIC_DISCORD_WEBHOOK_URI, options);
-  
+  const response = await fetch(
+    "https://discord.com/api/webhooks/1086239951760392302/N9UWx3EZBX4wDIayBbk9NDXy-MskFMFd4EohsLx4vk4I-Zt_HFXnLHdMiZAJLv3HgjBK",
+    options
+  );
+  const data = await response.json();
   console.log(req.body);
-  console.log(response.ok);
+  console.log(response.body);
   // console.log(req.headers)
 
   res.json({ msg: "Hello there" });

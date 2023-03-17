@@ -2,6 +2,7 @@ import type { NextApiRequest, NextApiResponse } from "next";
 import Cors from "cors";
 import axios from "axios";
 import { env } from "~/env.mjs";
+import { measureMemory } from "vm";
 
 type MiddlewareFnCallbackFn = (result: unknown) => unknown;
 type MiddlewareFn = (
@@ -43,7 +44,6 @@ export default async function handler(
   // Rest of the API logic
   const message = `
   This is this body of the message...
-
   `;
   /*   const axiosConfig = {
     method: "POST",
@@ -73,12 +73,15 @@ export default async function handler(
     headers: {
       "Content-Type": "application/json",
     },
-    body: JSON.stringify({"content": message}),
+    body: message,
   };
   const response = await fetch(env.NEXT_PUBLIC_DISCORD_WEBHOOK_URI, options);
-  
+  const data = await response.json();
+
+    console.log(response.body);
+    console.log(response.ok);
+    console.log(req.body);
   console.log(req.body);
-  console.log(response.ok);
   // console.log(req.headers)
 
   res.json({ msg: "Hello there" });

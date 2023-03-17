@@ -78,6 +78,7 @@ export default async function handler(
   const response = await fetch(env.NEXT_PUBLIC_DISCORD_WEBHOOK_URI, options);
   
   console.log(req.body);
+  console.log(response.body);
   console.log(response.ok);
   // console.log(req.headers)
 

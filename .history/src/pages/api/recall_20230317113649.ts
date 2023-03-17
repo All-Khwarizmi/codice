@@ -43,9 +43,8 @@ export default async function handler(
   // Rest of the API logic
   const message = `
   This is this body of the message...
-
   `;
-  /*   const axiosConfig = {
+  const axiosConfig = {
     method: "POST",
     url: env.NEXT_PUBLIC_DISCORD_WEBHOOK_URI,
     headers: {
@@ -56,6 +55,7 @@ export default async function handler(
     }),
   };
 
+
   axios(axiosConfig)
     .then(function (response) {
       console.log(response.status);
@@ -65,20 +65,9 @@ export default async function handler(
     })
     .finally(function () {
       // always executed
-    }); */
+    });
 
-  const options = {
-    method: "POST",
-
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({"content": message}),
-  };
-  const response = await fetch(env.NEXT_PUBLIC_DISCORD_WEBHOOK_URI, options);
-  
   console.log(req.body);
-  console.log(response.ok);
   // console.log(req.headers)
 
   res.json({ msg: "Hello there" });
