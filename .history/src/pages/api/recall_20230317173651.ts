@@ -2,7 +2,11 @@ import type { NextApiRequest, NextApiResponse } from "next";
 import Cors from "cors";
 
 import { env } from "~/env.mjs";
-
+import {
+  createTRPCRouter,
+  publicProcedure,
+  protectedProcedure,
+} from "~/server/api/trpc";
 import format from "date-fns/format";
 import { prisma } from "~/server/db";
 
@@ -49,10 +53,10 @@ export default async function handler(
       next: format(Date.now(), "dd MMMM yyyy"),
     },
   });
-  console.log(memoOfTheDay);
+  console.log(memoOfTheDay)
   const message = `
     You should study the following topics :
-    ${memoOfTheDay.map((item) => "-" + item.name + "\n").join(" ")}
+    ${memoOfTheDay.map(item => "-" + item.name + "\n").join(" ")}
   `;
   /*   const axiosConfig = {
     method: "POST",
@@ -82,10 +86,10 @@ export default async function handler(
     headers: {
       "Content-Type": "application/json",
     },
-    body: JSON.stringify({ content: message }),
+    body: JSON.stringify({"content": message}),
   };
   const response = await fetch(env.NEXT_PUBLIC_DISCORD_WEBHOOK_URI, options);
-
+  
   console.log(response.ok);
   console.log(response.body);
   console.log(req.body);

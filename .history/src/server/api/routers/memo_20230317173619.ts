@@ -36,7 +36,7 @@ export const memoRouter = createTRPCRouter({
       })
     )
     .mutation(async ({ ctx, input }) => {
-        const memoDate = await ctx.prisma.memoDate.create({
+        let memoDate = await ctx.prisma.memoDate.create({
           data: {
             name: input.name,
             last: format(Date.now(), "dd MMMM yyyy"),
