@@ -12,25 +12,15 @@ const Home: NextPage = () => {
 
   // Getting user authentication info
   const { data: sessionData } = useSession();
+ const ctx = api.useContext()
+ const memoDates = api.memo.getAll.useQuery()
+ const singleMemo = api.memo.getMemo.useQuery()
 
-  // Getting all Memos
-  const memoDates = api.memo.getAll.useQuery();
-
-  // Getting Memos that need to be studied today
-  const memoOfTheDay = api.memo.getMemo.useQuery();
-
-  // Getting Memos by User
-
-  const memoByUser = api.memo.getMemoByUser.useQuery({
-    userId: sessionData?.user.id!,
-  });
-
-  // Adding a memo && refecht all memos to avoid stale data
-  const ctx = api.useContext();
+  // Adding a memo && refecht all memos to 
   const { mutate } = api.memo.AddMemoDate.useMutation({
-    onSuccess: () => ctx.memo.getAll.refetch(),
+    onSuccess: () => ctx.memo.getAll.refetch() ,
   });
-  console.log("Memo today", memoOfTheDay);
+console.log("Memo today",singleMemo);
   if (sessionData) {
     console.log(sessionData);
     /* console.log(sessionData?.user.name);
@@ -39,17 +29,17 @@ const Home: NextPage = () => {
     console.log(sessionData?.user.image); */
   }
 
-  const handleAdd = () => {
-    const calendarVar = calendar();
+  const handleAdd =  () => {
+    const calendarVar = calendar()
     const memoDate = mutate({
-      name: "Second Memo",
+      name: 'Second Memo',
       userEmail: sessionData!.user.email!,
       userId: sessionData!.user.id,
       userImage: sessionData!.user.image!,
       userName: sessionData!.user.name!,
-      calendar: calendarVar,
+      calendar: calendarVar
     });
-    console.log("New memodate", memoDate);
+    console.log("New memodate",memoDate);
   };
   return (
     <>
@@ -74,20 +64,22 @@ const Home: NextPage = () => {
             </div>
             <div className="flex max-w-xs flex-col gap-4 rounded-xl bg-white/10 p-4 text-white hover:bg-white/20">
               <p>All Memos</p>
-              {memoDates.data?.map((memo) => {
-                return <div key={memo.id}>{memo.name}</div>;
+              {memoDates.data?.map(memo => {
+                return (
+                  <div key={memo.id}>
+                    {memo.name}
+                  </div>
+                )
               })}
             </div>
             <div className="flex max-w-xs flex-col gap-4 rounded-xl bg-white/10 p-4 text-white hover:bg-white/20">
               <p>Memos by User</p>
-              {memoByUser.data?.map((memo) => {
-                return <div key={memo.id}>{memo.name}</div>;
-              })}
-            </div>
-            <div className="flex max-w-xs flex-col gap-4 rounded-xl bg-white/10 p-4 text-white hover:bg-white/20">
-              <p>Memos of the day</p>
-              {memoOfTheDay.data?.map((memo) => {
-                return <div key={memo.id}>{memo.name}</div>;
+              {memoDates.data?.map(memo => {
+                return (
+                  <div key={memo.id}>
+                    {memo.name}
+                  </div>
+                )
               })}
             </div>
           </div>

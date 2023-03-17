@@ -80,13 +80,13 @@ const Home: NextPage = () => {
             </div>
             <div className="flex max-w-xs flex-col gap-4 rounded-xl bg-white/10 p-4 text-white hover:bg-white/20">
               <p>Memos by User</p>
-              {memoByUser.data?.map((memo) => {
+              {memoDates.data?.map((memo) => {
                 return <div key={memo.id}>{memo.name}</div>;
               })}
             </div>
             <div className="flex max-w-xs flex-col gap-4 rounded-xl bg-white/10 p-4 text-white hover:bg-white/20">
               <p>Memos of the day</p>
-              {memoOfTheDay.data?.map((memo) => {
+              {memoDates.data?.map((memo) => {
                 return <div key={memo.id}>{memo.name}</div>;
               })}
             </div>

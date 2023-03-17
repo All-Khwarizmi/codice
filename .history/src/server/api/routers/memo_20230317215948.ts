@@ -1,6 +1,8 @@
-import { z } from "zod";
+
+import {  z } from "zod";
 
 import format from "date-fns/format";
+
 
 import {
   createTRPCRouter,
@@ -70,14 +72,12 @@ export const memoRouter = createTRPCRouter({
     });
     return memo;
   }),
-  getMemoByUser: protectedProcedure
-    .input(z.object({ userId: z.string() }))
-    .query(({ ctx, input }) => {
-      const memo = ctx.prisma.memoDate.findMany({
-        where: {
-          userId: input.userId,
-        },
-      });
-      return memo;
-    }),
+  getMemoByUser: protectedProcedure.input(z.object({userId : z.string()})).query(({ ctx }) => {
+    const memo = ctx.prisma.memoDate.findMany({
+      where: {
+        next: format(Date.now(), "dd MMMM yyyy"),
+      },
+    });
+    return memo;
+  }),
 });

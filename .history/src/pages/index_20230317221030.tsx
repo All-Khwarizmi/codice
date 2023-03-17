@@ -17,7 +17,7 @@ const Home: NextPage = () => {
   const memoDates = api.memo.getAll.useQuery();
 
   // Getting Memos that need to be studied today
-  const memoOfTheDay = api.memo.getMemo.useQuery();
+  const memoOf = api.memo.getMemo.useQuery();
 
   // Getting Memos by User
 
@@ -30,7 +30,7 @@ const Home: NextPage = () => {
   const { mutate } = api.memo.AddMemoDate.useMutation({
     onSuccess: () => ctx.memo.getAll.refetch(),
   });
-  console.log("Memo today", memoOfTheDay);
+  console.log("Memo today", singleMemo);
   if (sessionData) {
     console.log(sessionData);
     /* console.log(sessionData?.user.name);
@@ -80,13 +80,13 @@ const Home: NextPage = () => {
             </div>
             <div className="flex max-w-xs flex-col gap-4 rounded-xl bg-white/10 p-4 text-white hover:bg-white/20">
               <p>Memos by User</p>
-              {memoByUser.data?.map((memo) => {
+              {memoDates.data?.map((memo) => {
                 return <div key={memo.id}>{memo.name}</div>;
               })}
             </div>
             <div className="flex max-w-xs flex-col gap-4 rounded-xl bg-white/10 p-4 text-white hover:bg-white/20">
               <p>Memos of the day</p>
-              {memoOfTheDay.data?.map((memo) => {
+              {memoDates.data?.map((memo) => {
                 return <div key={memo.id}>{memo.name}</div>;
               })}
             </div>

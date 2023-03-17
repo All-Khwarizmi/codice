@@ -72,10 +72,10 @@ export const memoRouter = createTRPCRouter({
   }),
   getMemoByUser: protectedProcedure
     .input(z.object({ userId: z.string() }))
-    .query(({ ctx, input }) => {
+    .query(({ ctx }) => {
       const memo = ctx.prisma.memoDate.findMany({
         where: {
-          userId: input.userId,
+          next: format(Date.now(), "dd MMMM yyyy"),
         },
       });
       return memo;
