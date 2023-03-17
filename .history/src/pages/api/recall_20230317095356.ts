@@ -1,6 +1,6 @@
 import type { NextApiRequest, NextApiResponse } from "next";
 import Cors from "cors";
-type MiddlewareFnCallbackFn = (result: unknown) => unknown
+type MiddlewareFnCallbackFn = (result: any) => any
 type MiddlewareFn = (
   req: NextApiRequest,
   res: NextApiResponse,
@@ -20,7 +20,7 @@ function runMiddleware(
   fn: MiddlewareFn
 ) {
   return new Promise((resolve, reject) => {
-    fn(req, res, (result: unknown) => {
+    fn(req, res, (result: any) => {
       if (result instanceof Error) {
         return reject(result);
       }
@@ -38,8 +38,7 @@ export default async function handler(
   await runMiddleware(req, res, cors);
 
   // Rest of the API logic
-console.log(req.body)
-console.log(req.headers)
+console.log(req)
 
-  res.json({msg: 'hello'});
+  res.json(req);
 }

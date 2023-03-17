@@ -1,6 +1,6 @@
 import type { NextApiRequest, NextApiResponse } from "next";
 import Cors from "cors";
-type MiddlewareFnCallbackFn = (result: unknown) => unknown
+type MiddlewareFnCallbackFn = (result: any) => un
 type MiddlewareFn = (
   req: NextApiRequest,
   res: NextApiResponse,
@@ -38,8 +38,7 @@ export default async function handler(
   await runMiddleware(req, res, cors);
 
   // Rest of the API logic
-console.log(req.body)
-console.log(req.headers)
+console.log(req)
 
-  res.json({msg: 'hello'});
+  res.json(req);
 }

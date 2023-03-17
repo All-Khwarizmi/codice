@@ -39,7 +39,6 @@ export default async function handler(
 
   // Rest of the API logic
 console.log(req.body)
-console.log(req.headers)
 
   res.json({msg: 'hello'});
 }
