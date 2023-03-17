@@ -68,5 +68,5 @@ export default async function handler(
   console.log(req.body);
   // console.log(req.headers)
 
-  res.json({ msg: "Hello there" });
+  res.json({ msg: "hello wordl" });
 }

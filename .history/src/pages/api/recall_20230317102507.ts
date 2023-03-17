@@ -1,9 +1,8 @@
 import type { NextApiRequest, NextApiResponse } from "next";
 import Cors from "cors";
-import axios from "axios";
-import { env } from "~/env.mjs";
+import axios from 'axios'
 
-type MiddlewareFnCallbackFn = (result: unknown) => unknown;
+type MiddlewareFnCallbackFn = (result: unknown) => unknown
 type MiddlewareFn = (
   req: NextApiRequest,
   res: NextApiResponse,
@@ -41,32 +40,10 @@ export default async function handler(
   await runMiddleware(req, res, cors);
 
   // Rest of the API logic
-  let message = `
-  This is this body of the message...
-  `;
-  const axiosConfig = {
-    method: "POST",
-    url: env.NEXT_PUBLIC_DISCORD_WEBHOOK_URI,
-    headers: {
-      "Content-Type": "application/json",
-    },
-    data: JSON.stringify({
-      content: message,
-    }),
-  };
-  axios(axiosConfig)
-    .then(function (response) {
-      console.log(response.status);
-    })
-    .catch(function (error) {
-      console.log(error);
-    })
-    .finally(function () {
-      // always executed
-    });
 
-  console.log(req.body);
-  // console.log(req.headers)
+  
+console.log(req.body)
+console.log(req.headers)
 
-  res.json({ msg: "Hello there" });
+  res.json({msg: 'hello wordl'});
 }

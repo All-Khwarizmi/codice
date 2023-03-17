@@ -1,9 +1,8 @@
 import type { NextApiRequest, NextApiResponse } from "next";
 import Cors from "cors";
-import axios from "axios";
-import { env } from "~/env.mjs";
+import axios from 'axios'
 
-type MiddlewareFnCallbackFn = (result: unknown) => unknown;
+type MiddlewareFnCallbackFn = (result: unknown) => unknown
 type MiddlewareFn = (
   req: NextApiRequest,
   res: NextApiResponse,
@@ -41,19 +40,16 @@ export default async function handler(
   await runMiddleware(req, res, cors);
 
   // Rest of the API logic
-  let message = `
-  This is this body of the message...
-  `;
-  const axiosConfig = {
-    method: "POST",
-    url: env.NEXT_PUBLIC_DISCORD_WEBHOOK_URI,
-    headers: {
-      "Content-Type": "application/json",
-    },
-    data: JSON.stringify({
-      content: message,
-    }),
-  };
+const axiosConfig = {
+  method: "POST",
+  url: "https://discord.com/api/webhooks/1086192170089840761/G8hhoI7PcuuLh0_OpjrnWiL0E33fxZDtPHky20VdntZPjl7heCYdAJpXsmJBZZgN4cQ4",
+  headers: {
+    "Content-Type": "application/json",
+  },
+  body: {
+    "content": ""
+  },
+};
   axios(axiosConfig)
     .then(function (response) {
       console.log(response.status);
@@ -65,8 +61,23 @@ export default async function handler(
       // always executed
     });
 
-  console.log(req.body);
-  // console.log(req.headers)
+/* const response = await fetch(
+  "https://discord.com/api/webhooks/1086192170089840761/G8hhoI7PcuuLh0_OpjrnWiL0E33fxZDtPHky20VdntZPjl7heCYdAJpXsmJBZZgN4cQ4",
+  {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      "content": "Hey ya"
+    }),
+  }
+);
+const data = await response.json() */
+/* console.log(response.status)
+console.log(response.headers) */
+console.log(req.body)
+// console.log(req.headers)
 
-  res.json({ msg: "Hello there" });
+  res.json({msg: 'hello wordl'});
 }
