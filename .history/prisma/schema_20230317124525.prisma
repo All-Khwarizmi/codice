@@ -6,7 +6,7 @@ generator client {
 }
 
 datasource db {
-    provider = "postgres"
+    provider = "sqlite"
     // NOTE: When using postgresql, mysql or sqlserver, uncomment the @db.Text annotations in model Account below
     // Further reading:
     // https://next-auth.js.org/adapters/prisma#create-the-prisma-schema
@@ -66,13 +66,13 @@ model MemoDate {
     last     DateTime
     next     DateTime
     calendar Calendar   @relation(fields: [calendarId], references: [id])
-    calendarId String   @unique
+    calendarId 
 }
 
 model Calendar {
     id         String      @id @default(cuid())
     recallDays RecallDay[]
-    MemoDate   MemoDate? 
+    MemoDate   MemoDate?   @relation(fields: [memoDateId], references: [id])
     memoDateId String?
 }
 
