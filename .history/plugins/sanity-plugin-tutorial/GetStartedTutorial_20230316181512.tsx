@@ -35,7 +35,7 @@ export const GetStartedTutorial = () => {
   const rootElement = useRef(null)
   const rect = useElementSize(rootElement.current)
   const width = rect?.content?.width
-  const isSmallScreen = width ? width < sanity.media[1]! : false
+  const isSmallScreen = width ? width < sanity.media[1] : false
   const isProdEnv = process.env.NODE_ENV !== 'development'
 
   const onClose = () => {
