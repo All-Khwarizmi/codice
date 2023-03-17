@@ -141,9 +141,6 @@ export const setMemoDate: MemoDateFn = () => {
 export const log = console.log;
 
 export const memoParser: MemoParser = (memoDateStr) => {
-  {
-    /* @typescript-eslint/no-unsafe-assignment */
-  }
   const memo: MemoDateData = JSON.parse(memoDateStr);
 
   return memo;

@@ -13,6 +13,7 @@ import addWeeks from 'date-fns/addWeeks';
 import format from 'date-fns/format';
 import { differenceInDays } from 'date-fns';
 import { MemoParser } from './memoTypes';
+import { object } from 'zod';
 
 /**
  * @name calendar
@@ -131,7 +132,7 @@ export const isMemoTime: IsMemoTime = (memoDate) => {
 
 export const setMemoDate: MemoDateFn = () => {
   {/* @typescript-eslint/no-unsafe-assignment */}
-  const memoObj: MemoDateData = Object();
+  const memoObj: MemoDateData = object;
   memoObj.calendar = calendar();
   memoObj.lastRecallDay = Date();
   memoObj.nextRecallDay = memoObj.calendar.recallOne;

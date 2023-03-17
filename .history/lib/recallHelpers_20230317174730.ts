@@ -130,7 +130,7 @@ export const isMemoTime: IsMemoTime = (memoDate) => {
  */
 
 export const setMemoDate: MemoDateFn = () => {
-  {/* @typescript-eslint/no-unsafe-assignment */}
+  /* @typescript-eslint/no-unsafe-assignment */
   const memoObj: MemoDateData = Object();
   memoObj.calendar = calendar();
   memoObj.lastRecallDay = Date();
@@ -141,9 +141,6 @@ export const setMemoDate: MemoDateFn = () => {
 export const log = console.log;
 
 export const memoParser: MemoParser = (memoDateStr) => {
-  {
-    /* @typescript-eslint/no-unsafe-assignment */
-  }
   const memo: MemoDateData = JSON.parse(memoDateStr);
 
   return memo;

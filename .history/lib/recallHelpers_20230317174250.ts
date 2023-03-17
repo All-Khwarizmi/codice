@@ -130,7 +130,6 @@ export const isMemoTime: IsMemoTime = (memoDate) => {
  */
 
 export const setMemoDate: MemoDateFn = () => {
-  {/* @typescript-eslint/no-unsafe-assignment */}
   const memoObj: MemoDateData = Object();
   memoObj.calendar = calendar();
   memoObj.lastRecallDay = Date();
@@ -141,10 +140,7 @@ export const setMemoDate: MemoDateFn = () => {
 export const log = console.log;
 
 export const memoParser: MemoParser = (memoDateStr) => {
-  {
-    /* @typescript-eslint/no-unsafe-assignment */
-  }
-  const memo: MemoDateData = JSON.parse(memoDateStr);
+  let memo: MemoDateData = JSON.parse(memoDateStr);
 
   return memo;
 };
@@ -155,13 +151,13 @@ type MemoDateCheckerReturn = {
 };
 type MemoDateChecker = (memoName: string) => MemoDateCheckerReturn;
 export const memoDateChecker: MemoDateChecker = (memoName) => {
-  const memoDateCheckerReturn: MemoDateCheckerReturn = {
+  let memoDateCheckerReturn: MemoDateCheckerReturn = {
     isMemoDate: false,
   };
   const isMDInLocalStorage = localStorage.getItem(memoName);
   if (isMDInLocalStorage) {
     console.log('isMDInLocalStorage', isMDInLocalStorage);
-    const memoDate = memoParser(isMDInLocalStorage);
+    const memoDate = memoParser(isMDInLocalStorage!);
     const isTimeObj = isMemoTime(memoDate);
     console.log('isTimeObj', isTimeObj);
     memoDateCheckerReturn.isMemoDate = true

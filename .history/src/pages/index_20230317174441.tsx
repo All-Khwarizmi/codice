@@ -24,7 +24,7 @@ console.log("Memo today",singleMemo);
     console.log(sessionData?.user.image); */
   }
 
-  const handleAdd =  () => {
+  const handleAdd = async () => {
     const calendarVar = calendar()
     const memoDate = mutate({
       name: 'Second Memo',

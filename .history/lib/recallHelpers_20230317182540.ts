@@ -131,7 +131,7 @@ export const isMemoTime: IsMemoTime = (memoDate) => {
 
 export const setMemoDate: MemoDateFn = () => {
   {/* @typescript-eslint/no-unsafe-assignment */}
-  const memoObj: MemoDateData = Object();
+  const memoObj: MemoDateData = {Object()};
   memoObj.calendar = calendar();
   memoObj.lastRecallDay = Date();
   memoObj.nextRecallDay = memoObj.calendar.recallOne;
