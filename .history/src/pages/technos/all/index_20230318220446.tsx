@@ -2,7 +2,6 @@ import React from 'react'
 import { client } from 'lib/sanity-client';
 import { AllTechnos, ALLTECHNOS } from 'queries/queries';
 import { Technos } from 'typings';
-import Link from 'next/link';
 
 const AllTchnos = ({ technos }: AllTechnos) => {
   console.log(technos);
@@ -14,13 +13,11 @@ const AllTchnos = ({ technos }: AllTechnos) => {
             {technos.map(techno => {
               return (
                 <div key={techno._id}>
-                  <Link href={{pathname: './deck', query: techno.name}}>
-                    <img
-                      className="rounded-lg"
-                      src={techno.image.asset.url}
-                      alt={`${techno.name} image`}
-                    />
-                  </Link>
+                  <img
+                    className="rounded-lg"
+                    src={techno.image.asset.url}
+                    alt={`${techno.name} image`}
+                  />
                 </div>
               );
             })}

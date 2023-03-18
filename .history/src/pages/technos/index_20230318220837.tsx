@@ -12,17 +12,17 @@ import { AllTechnos, ALLTECHNOS } from "queries/queries";
 // Enable NextJS to cache and dedupe queries
 
 
-const Technos = ({technos}: AllTechnos) => {
+const Technos: NextPage = ({technos}: AllTechnos) => {
   
   return (
-   
+    <>
       <>
         <main className="flex min-h-screen flex-col items-center justify-center bg-gradient-to-b from-[#2e026d] to-[#15162c]">
           <div className="grid grid-cols-1 gap-3 p-10  md:grid-cols-3">
             {technos.map((techno) => {
               return (
                 <div key={techno._id}>
-                  <Link href={{ pathname: "./decks", query: {techno: techno.name} }}>
+                  <Link href={{ pathname: "./deck", query: techno.name }}>
                     <img
                       className="rounded-lg"
                       src={techno.image.asset.url}
@@ -35,7 +35,7 @@ const Technos = ({technos}: AllTechnos) => {
           </div>
         </main>
       </>
-   
+    </>
   );
 };
 

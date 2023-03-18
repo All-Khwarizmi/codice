@@ -2,8 +2,8 @@ import { groq } from "next-sanity";
 import { Deck, Technos } from "typings";
 
 export type AllTechnos = {
-  technos: Technos[];
-};
+  technos
+}
 // Get all technos with name, id and image only
 export const ALLTECHNOS = groq`
 *[_type == "technos"]{
