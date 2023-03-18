@@ -9,7 +9,7 @@ import { api } from "~/utils/api";
 import { QueryCache } from "@tanstack/react-query";
 
 // Enable NextJS to cache and dedupe queries
-
+const clientFetch = cache(client.fetch.bind(client));
 
 const Technos: NextPage = () => {
   const [form, setForm] = useState({

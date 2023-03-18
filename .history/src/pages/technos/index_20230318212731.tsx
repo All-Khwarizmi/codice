@@ -4,12 +4,12 @@ import { NextPage } from "next";
 import { useSession } from "next-auth/react";
 import Head from "next/head";
 import Link from "next/link";
-import React, {  useState } from "react";
+import React, { cache, useState } from "react";
 import { api } from "~/utils/api";
-import { QueryCache } from "@tanstack/react-query";
+import { CacheHandler } from "next/dist/server/lib/incremental-cache";
 
 // Enable NextJS to cache and dedupe queries
-
+const clientFetch = CacheHandler(client.fetch.bind(client));
 
 const Technos: NextPage = () => {
   const [form, setForm] = useState({
