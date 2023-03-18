@@ -26,7 +26,7 @@ const Decks = ({ decks }: DeckByTechnoArr) => {
                       {deck.name}
                     </p>
                     <p>
-                      {deck.description}
+                      {deck.name}
                     </p>
                   </Link>
                 </div>

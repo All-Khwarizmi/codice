@@ -11,23 +11,16 @@ const Decks = ({ decks }: DeckByTechnoArr) => {
       <main className="flex min-h-screen flex-col items-center justify-center bg-gradient-to-b from-[#2e026d] to-[#15162c]">
         <div className="grid grid-cols-1 gap-3 p-10  md:grid-cols-3">
           {decks.map((item) => {
-            console.log("item",item)
+            console.log(""item,item)
            return item.deck.map(deck => {
-            console.log("deck", deck);
               return (
-                <div className="text-white" key={deck._id}>
+                <div key={deck._id}>
                   <Link href={`./decks/${deck.name}`}>
                     <img
                       className="rounded-lg"
-                      src={deck.image?.asset.url}
+                      src={deck.image.asset.url}
                       alt={`${deck.name} image`}
                     />
-                    <p>
-                      {deck.name}
-                    </p>
-                    <p>
-                      {deck.description}
-                    </p>
                   </Link>
                 </div>
               );

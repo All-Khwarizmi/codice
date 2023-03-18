@@ -13,21 +13,15 @@ const Decks = ({ decks }: DeckByTechnoArr) => {
           {decks.map((item) => {
             console.log("item",item)
            return item.deck.map(deck => {
-            console.log("deck", deck);
+            
               return (
-                <div className="text-white" key={deck._id}>
+                <div key={deck._id}>
                   <Link href={`./decks/${deck.name}`}>
                     <img
                       className="rounded-lg"
-                      src={deck.image?.asset.url}
+                      src={deck.image.asset.url}
                       alt={`${deck.name} image`}
                     />
-                    <p>
-                      {deck.name}
-                    </p>
-                    <p>
-                      {deck.description}
-                    </p>
                   </Link>
                 </div>
               );
