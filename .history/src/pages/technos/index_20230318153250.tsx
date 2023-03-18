@@ -83,7 +83,7 @@ const Technos: NextPage = () => {
                 {filteredList.map((item) => {
                   return (
                     <li onClick={() => setSearch(item)} key={item}>
-                     • {item}
+                      {item}
                     </li>
                   );
                 })}

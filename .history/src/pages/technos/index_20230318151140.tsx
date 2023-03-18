@@ -11,16 +11,9 @@ const Technos: NextPage = () => {
     techno: "",
     difficulty: "beginner",
   });
-  const [isTechno, setIsTechno] = useState<boolean>(false);
-  const [technosList, setTechnosList] = useState([
-    "css",
-    "html",
-    "javascript",
-    "nextjs",
-    "react",
-  ]);
-  
-  const filteredList = technosList.filter((item) => item.toLocaleLowerCase().includes(form.techno.toLocaleLowerCase()));
+const [technosList, setTechnosList] = useState([
+    "css", ''
+])
   // Getting user authentication info
   const { data: sessionData } = useSession();
 
@@ -33,7 +26,10 @@ const Technos: NextPage = () => {
     console.log(sessionData?.user.image); */
   }
   console.log("Form", form);
-  console.log("Filtered list", filteredList);
+  console.log(
+    "Form",
+    `./decks/techno:${form.techno}/difficulty:${form.difficulty}`
+  );
 
   const handleTechnoName = (e: any) => {
     e.preventDefault();
@@ -42,7 +38,6 @@ const Technos: NextPage = () => {
       difficulty: form.difficulty,
     };
     setForm(formObj);
-    setIsTechno(false)
   };
 
   const handleDifficulty = (e: any) => {
@@ -51,14 +46,6 @@ const Technos: NextPage = () => {
       difficulty: e.target.value,
     };
     setForm(formObj);
-  };
-  const setSearch = (item: string) => {
-    let formObj = {
-      techno: item,
-      difficulty: form.difficulty,
-    };
-    setForm(formObj);
-    setIsTechno(true)
   };
   return (
     <>
@@ -75,20 +62,7 @@ const Technos: NextPage = () => {
               type="text"
               placeholder="techno"
             />
-            <div
-              className={`${form.techno === "" || isTechno ? "hidden" : ""}
-            text-white`}
-            >
-              <ul>
-                {filteredList.map((item) => {
-                  return (
-                    <li onClick={() => setSearch(item)} key={item}>
-                     • {item}
-                    </li>
-                  );
-                })}
-              </ul>
-            </div>
+            <div className="bg-white text-black"></div>
             <form
               onChange={(e) => handleDifficulty(e)}
               className="flex flex-row justify-center space-x-5"

@@ -20,7 +20,7 @@ const Technos: NextPage = () => {
     "react",
   ]);
   
-  const filteredList = technosList.filter((item) => item.toLocaleLowerCase().includes(form.techno.toLocaleLowerCase()));
+  const filteredList = technosList.filter((item) => item.includes(form.techno));
   // Getting user authentication info
   const { data: sessionData } = useSession();
 
@@ -42,7 +42,6 @@ const Technos: NextPage = () => {
       difficulty: form.difficulty,
     };
     setForm(formObj);
-    setIsTechno(false)
   };
 
   const handleDifficulty = (e: any) => {
@@ -83,7 +82,7 @@ const Technos: NextPage = () => {
                 {filteredList.map((item) => {
                   return (
                     <li onClick={() => setSearch(item)} key={item}>
-                     • {item}
+                      {item}
                     </li>
                   );
                 })}

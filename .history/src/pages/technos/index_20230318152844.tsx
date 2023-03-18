@@ -11,7 +11,7 @@ const Technos: NextPage = () => {
     techno: "",
     difficulty: "beginner",
   });
-  const [isTechno, setIsTechno] = useState<boolean>(false);
+  const [isTechno, setIsTechno] = useState<boolean>();
   const [technosList, setTechnosList] = useState([
     "css",
     "html",
@@ -20,7 +20,7 @@ const Technos: NextPage = () => {
     "react",
   ]);
   
-  const filteredList = technosList.filter((item) => item.toLocaleLowerCase().includes(form.techno.toLocaleLowerCase()));
+  const filteredList = technosList.filter((item) => item.includes(form.techno));
   // Getting user authentication info
   const { data: sessionData } = useSession();
 
@@ -42,7 +42,6 @@ const Technos: NextPage = () => {
       difficulty: form.difficulty,
     };
     setForm(formObj);
-    setIsTechno(false)
   };
 
   const handleDifficulty = (e: any) => {
@@ -58,7 +57,6 @@ const Technos: NextPage = () => {
       difficulty: form.difficulty,
     };
     setForm(formObj);
-    setIsTechno(true)
   };
   return (
     <>
@@ -76,14 +74,14 @@ const Technos: NextPage = () => {
               placeholder="techno"
             />
             <div
-              className={`${form.techno === "" || isTechno ? "hidden" : ""}
+              className={`${form.techno === "" && "hidden"}
             text-white`}
             >
               <ul>
                 {filteredList.map((item) => {
                   return (
                     <li onClick={() => setSearch(item)} key={item}>
-                     • {item}
+                      {item}
                     </li>
                   );
                 })}

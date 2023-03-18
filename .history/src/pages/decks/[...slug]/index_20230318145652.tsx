@@ -6,8 +6,7 @@ import { useRouter } from "next/router";
 
 const Decks: NextPage = () => {
     const router = useRouter();
-    const { techno, difficulty } = router.query;
-    console.log(techno, difficulty)
+    const { name } = router.query;
   return (
     <>
       <main className="flex min-h-screen flex-col items-center justify-center bg-gradient-to-b from-[#2e026d] to-[#15162c]"></main>
