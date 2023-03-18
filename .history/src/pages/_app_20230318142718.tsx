@@ -5,7 +5,6 @@ import Navbar from "~/components/Navbar";
 import { api } from "~/utils/api";
 
 import "~/styles/globals.css";
-import Head from "next/head";
 
 const MyApp: AppType<{ session: Session | null }> = ({
   Component,
@@ -14,16 +13,10 @@ const MyApp: AppType<{ session: Session | null }> = ({
   return (
     <SessionProvider session={session}>
       <Navbar />
-      <Head>
-        <title>Codice</title>
-        <meta
-          name="description"
-          content="Neuroscience based application to ice your code interview "
-        />
-        <link rel="icon" href="./Mon projet.png" />
-      </Head>
+      
 
       <Component {...pageProps} />
+      
     </SessionProvider>
   );
 };
