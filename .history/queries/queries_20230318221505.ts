@@ -57,14 +57,11 @@ export const DECKBYNAME = groq`
  }
 `;
 
-export interface DeckByTechno {
+export  DeckByTechno {
 _id: string
 deck: Deck
 name : string
 }
-export type DeckByTechnoArr = {
-  decks: DeckByTechno[]
-};
 export const DECKBYTECHNO = groq`
 *[_type == "technos" &&
   name == $technoName

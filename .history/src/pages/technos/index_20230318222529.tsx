@@ -22,7 +22,7 @@ const Technos = ({technos}: AllTechnos) => {
             {technos.map((techno) => {
               return (
                 <div key={techno._id}>
-                  <Link href={`./decks/${techno.name}`}>
+                  <Link href={`./decks`}>
                     <img
                       className="rounded-lg"
                       src={techno.image.asset.url}

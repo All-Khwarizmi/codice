@@ -63,7 +63,7 @@ deck: Deck
 name : string
 }
 export type DeckByTechnoArr = {
-  decks: DeckByTechno[]
+  decks: DeckByTechno;
 };
 export const DECKBYTECHNO = groq`
 *[_type == "technos" &&

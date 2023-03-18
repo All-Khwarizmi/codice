@@ -23,7 +23,7 @@ export const getServerSideProps = async ({params}: Params) => {
     params.slug[0],
     params.slug.map((item) => item).toString()
   );
-  const decks = await client.fetch(DECKBYTECHNO, { technoName: params.slug.map(item => item).toString()});
+  const decks = await client.fetch(DECKBYTECHNO, { technoName: params.slug.map(item => item)});
 
   return {
     props: {

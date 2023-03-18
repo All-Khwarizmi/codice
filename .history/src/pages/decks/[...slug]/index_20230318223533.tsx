@@ -15,15 +15,11 @@ const Decks = ({ decks }: DeckByTechnoArr) => {
 export default Decks;
 
 type Params = {
-  params: {slug : Array<string>}
+  slug : Array<string>
 }
 export const getServerSideProps = async ({params}: Params) => {
-  console.log(
-    "Params",
-    params.slug[0],
-    params.slug.map((item) => item).toString()
-  );
-  const decks = await client.fetch(DECKBYTECHNO, { technoName: params.slug.map(item => item).toString()});
+  console.log("Params", params);
+  const decks = await client.fetch(DECKBYTECHNO, { technoName: params.slug[0]});
 
   return {
     props: {
