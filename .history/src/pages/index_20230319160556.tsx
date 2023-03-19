@@ -1,6 +1,7 @@
 import { type NextPage } from "next";
 import Link from "next/link";
 import { signIn, signOut, useSession } from "next-auth/react";
+import { api } from "~/utils/api";
 import Image from "next/image";
 
 const Home: NextPage = () => {
@@ -12,7 +13,7 @@ const Home: NextPage = () => {
             <Image
               priority
               src={"/favicon.ico"}
-              width={300}
+              width={auto}
               height={300}
               alt="codice logo"
             />

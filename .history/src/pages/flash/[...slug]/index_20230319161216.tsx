@@ -11,8 +11,7 @@ const FlashCard = ({ data }: FlashData) => {
   const [count, setCount] = useState<number>(0);
   const [isLast, setIsLast] = useState<boolean>(false);
   const [isFlip, setIsFlip] = useState<boolean>(false);
-  const router = useRouter();
-  console.log();
+
 
   // Keeping track of questions
   useEffect(() => {
@@ -118,12 +117,9 @@ const FlashCard = ({ data }: FlashData) => {
                 <BiLeftArrow className="text-3xl text-gray-300" />
               </button>
             )}
-            <button
-              onClick={router.back}
-              className="flex items-center font-bold uppercase text-white"
-            >
+            <div className="flex items-center font-bold uppercase text-white">
               <p>Terminer</p>
-            </button>
+            </div>
             <div className="flex justify-end">
               {count === numberOfQuestion.current ? (
                 <button disabled>

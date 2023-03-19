@@ -118,13 +118,10 @@ const FlashCard = ({ data }: FlashData) => {
                 <BiLeftArrow className="text-3xl text-gray-300" />
               </button>
             )}
-            <button
-              onClick={router.back}
-              className="flex items-center font-bold uppercase text-white"
-            >
+            <button className="flex items-center font-bold uppercase text-white">
               <p>Terminer</p>
-            </button>
-            <div className="flex justify-end">
+            </div>
+            <button className="flex justify-end">
               {count === numberOfQuestion.current ? (
                 <button disabled>
                   {" "}

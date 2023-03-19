@@ -1,7 +1,7 @@
 import React from 'react'
 import { client } from 'lib/sanity-client';
 import { AllTechnos, ALLTECHNOS } from 'queries/queries';
-import { Technos } from 'typings';
+
 import Link from 'next/link';
 
 const AllTchnos = ({ technos }: AllTechnos) => {

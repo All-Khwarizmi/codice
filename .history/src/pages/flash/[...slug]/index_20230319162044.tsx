@@ -119,7 +119,7 @@ const FlashCard = ({ data }: FlashData) => {
               </button>
             )}
             <button
-              onClick={router.back}
+              onClick={router.back()}
               className="flex items-center font-bold uppercase text-white"
             >
               <p>Terminer</p>
