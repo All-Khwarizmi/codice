@@ -17,7 +17,7 @@ const Home: NextPage = () => {
             <Image
               src={"/favicon.ico"}
               width={300}
-              height={300}
+              height={200}
               alt="codice logo"
             />
           </h1>
