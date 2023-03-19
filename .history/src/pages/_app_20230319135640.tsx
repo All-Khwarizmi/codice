@@ -20,7 +20,7 @@ const MyApp: AppType<{ session: Session | null }> = ({
           name="description"
           content="Neuroscience based application to ice your code interview "
         />
-        <link rel="icon" href="favicon.ico" />
+        <link rel="icon" href="./favicon.ico" />
       </Head>
 
       <Component {...pageProps} />
