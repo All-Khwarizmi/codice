@@ -7,21 +7,19 @@ import { Deck } from "typings";
 const FlashCard = ({ data }: FlashData) => {
   const [count, setCount] = useState<number>(0);
   const [isLast, setIsLast] = useState<boolean>(false);
-  const [isFlip, setIsFlip] = useState<boolean>(false);
 
   // Keeping track of questions
   useEffect(() => {
     if (numberOfQuestion.current === count) {
       setIsLast(true);
+      // console.log(numberOfQuestion, count);
     }
-    console.log(numberOfQuestion.current, count);
   }, [count]);
-console.log(isLast)
+
   const dataRef = useRef(data.map((item) => item.flashCard.map(flash => flash).length).toString())
   // const flashCards = useRef(dataRef.current.map(item => item));
   const numberOfQuestion = useRef(parseInt(dataRef.current.toString()) -1);
-/*  
-
+ 
   console.log(
     
         "dataRef",
@@ -29,16 +27,7 @@ console.log(isLast)
    
     "numberOfQuestion",
     numberOfQuestion
-  );  */
-  const handleFlip = () => {
-    setIsFlip(!isFlip)
-  }
-  const setPrevFlash = () => {
-    setCount(count -1 )
-  }
-  const setNextFlash = () => {
-    setCount(count +1 )
-  }
+  ); 
   return (
     <>
       <main className="flex min-h-screen flex-col items-center justify-center bg-gradient-to-b from-[#FFA36A] to-[#00d4ff]">
@@ -59,48 +48,24 @@ console.log(isLast)
           {data.map((item) =>
             item.flashCard.map((flash, index) => {
               return (
-                <div
-                  className={`${count !== index && "hidden"}
-                h-full w-full bg-white/10 `}
-                  key={flash._key}
-                >
-                  <div className="flex justify-end">
-                    <div onClick={handleFlip}>Flip</div>
+                <div className="h-full w-full bg-white/10 " key={flash._key}>
+                  <div className="flex justif">
+                   <div>Flip</div>
                   </div>
                   <div>
-                    <p className={`${isFlip && "hidden"}`}>
-                      {" "}
-                      {flash.question}{" "}
-                    </p>
+                    <p> {flash.question} </p>
                   </div>
                   <div>
-                    <p className={`${!isFlip && "hidden"}`}>
-                      {" "}
-                      {flash.reponse}{" "}
-                    </p>
+                    <p> {flash.reponse} </p>
                   </div>
                 </div>
               );
             })
           )}
           <div className="grid grid-cols-3 gap-10">
-            {count === 0 ? (
-              <button className="text-gray-600" disabled>
-                {" "}
-                left
-              </button>
-            ) : (
-              <button onClick={setPrevFlash}>left</button>
-            )}
-            <div>Terminer</div>
-            {count === numberOfQuestion.current ? (
-              <button className="text-gray-600" disabled>
-                {" "}
-                right
-              </button>
-            ) : (
-              <button onClick={setNextFlash} >right</button>
-            )}
+            <div>Gauche</div>
+            <div>Valider</div>
+            <div>Droite</div>
           </div>
         </section>
       </main>

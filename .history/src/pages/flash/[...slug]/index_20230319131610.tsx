@@ -13,10 +13,10 @@ const FlashCard = ({ data }: FlashData) => {
   useEffect(() => {
     if (numberOfQuestion.current === count) {
       setIsLast(true);
+       console.log(numberOfQuestion, count);
     }
-    console.log(numberOfQuestion.current, count);
   }, [count]);
-console.log(isLast)
+
   const dataRef = useRef(data.map((item) => item.flashCard.map(flash => flash).length).toString())
   // const flashCards = useRef(dataRef.current.map(item => item));
   const numberOfQuestion = useRef(parseInt(dataRef.current.toString()) -1);
@@ -90,16 +90,16 @@ console.log(isLast)
                 left
               </button>
             ) : (
-              <button onClick={setPrevFlash}>left</button>
+              <button>left</button>
             )}
-            <div>Terminer</div>
+            <div>Valider</div>
             {count === numberOfQuestion.current ? (
               <button className="text-gray-600" disabled>
                 {" "}
                 right
               </button>
             ) : (
-              <button onClick={setNextFlash} >right</button>
+              <button>right</button>
             )}
           </div>
         </section>

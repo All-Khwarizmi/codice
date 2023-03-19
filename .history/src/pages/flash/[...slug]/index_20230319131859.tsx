@@ -14,9 +14,9 @@ const FlashCard = ({ data }: FlashData) => {
     if (numberOfQuestion.current === count) {
       setIsLast(true);
     }
-    console.log(numberOfQuestion.current, count);
+    console.log(numberOfQuestion.current, count, isLast);
   }, [count]);
-console.log(isLast)
+
   const dataRef = useRef(data.map((item) => item.flashCard.map(flash => flash).length).toString())
   // const flashCards = useRef(dataRef.current.map(item => item));
   const numberOfQuestion = useRef(parseInt(dataRef.current.toString()) -1);
@@ -92,7 +92,7 @@ console.log(isLast)
             ) : (
               <button onClick={setPrevFlash}>left</button>
             )}
-            <div>Terminer</div>
+            <div>Valider</div>
             {count === numberOfQuestion.current ? (
               <button className="text-gray-600" disabled>
                 {" "}

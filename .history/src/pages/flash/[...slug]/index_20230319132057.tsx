@@ -92,7 +92,7 @@ console.log(isLast)
             ) : (
               <button onClick={setPrevFlash}>left</button>
             )}
-            <div>Terminer</div>
+            <div>Valider</div>
             {count === numberOfQuestion.current ? (
               <button className="text-gray-600" disabled>
                 {" "}

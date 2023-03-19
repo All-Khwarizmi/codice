@@ -13,10 +13,10 @@ const FlashCard = ({ data }: FlashData) => {
   useEffect(() => {
     if (numberOfQuestion.current === count) {
       setIsLast(true);
+      // console.log(numberOfQuestion, count);
     }
-    console.log(numberOfQuestion.current, count);
   }, [count]);
-console.log(isLast)
+
   const dataRef = useRef(data.map((item) => item.flashCard.map(flash => flash).length).toString())
   // const flashCards = useRef(dataRef.current.map(item => item));
   const numberOfQuestion = useRef(parseInt(dataRef.current.toString()) -1);
@@ -35,9 +35,6 @@ console.log(isLast)
   }
   const setPrevFlash = () => {
     setCount(count -1 )
-  }
-  const setNextFlash = () => {
-    setCount(count +1 )
   }
   return (
     <>
@@ -59,11 +56,8 @@ console.log(isLast)
           {data.map((item) =>
             item.flashCard.map((flash, index) => {
               return (
-                <div
-                  className={`${count !== index && "hidden"}
-                h-full w-full bg-white/10 `}
-                  key={flash._key}
-                >
+                <div className={`${count !== index && "hidden"}
+                h-full w-full bg-white/10 `} key={flash._key}>
                   <div className="flex justify-end">
                     <div onClick={handleFlip}>Flip</div>
                   </div>
@@ -84,23 +78,15 @@ console.log(isLast)
             })
           )}
           <div className="grid grid-cols-3 gap-10">
-            {count === 0 ? (
-              <button className="text-gray-600" disabled>
-                {" "}
-                left
+            <div className={`
+            ${count === 0 ? (
+              <button disabled >
+                <--
               </button>
-            ) : (
-              <button onClick={setPrevFlash}>left</button>
-            )}
-            <div>Terminer</div>
-            {count === numberOfQuestion.current ? (
-              <button className="text-gray-600" disabled>
-                {" "}
-                right
-              </button>
-            ) : (
-              <button onClick={setNextFlash} >right</button>
-            )}
+            ): ()}
+            `}>Gauche</div>
+            <div>Valider</div>
+            <div>Droite</div>
           </div>
         </section>
       </main>
