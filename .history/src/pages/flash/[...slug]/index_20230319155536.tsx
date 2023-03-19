@@ -44,7 +44,7 @@ const FlashCard = ({ data }: FlashData) => {
       <main className="flex min-h-screen flex-col items-center justify-center bg-gradient-to-b from-[#FFA36A] to-[#00d4ff]">
         {/* Title */}
         <section>
-          <div className="pb-5 pt-10">
+          <div className="py-5">
             {" "}
             {data.map((item) => {
               return (

@@ -19,10 +19,10 @@ const FlashCard = ({ data }: FlashData) => {
     }
   }, [count]);
 
-  // Settin up variables as refs to avoid rerenders 
   const dataRef = useRef(
     data.map((item) => item.flashCard.map((flash) => flash).length).toString()
   );
+ 
   const numberOfQuestion = useRef(parseInt(dataRef.current.toString()) - 1);
 
   // Switch between question and answer by changing display on element
@@ -30,7 +30,7 @@ const FlashCard = ({ data }: FlashData) => {
     setIsFlip(!isFlip);
   };
 
-  // Go back to previous or next card by mutating count which is used by element to display card
+  // 
   const setPrevFlash = () => {
     setIsFlip(false);
     setCount(count - 1);
@@ -42,24 +42,19 @@ const FlashCard = ({ data }: FlashData) => {
   return (
     <>
       <main className="flex min-h-screen flex-col items-center justify-center bg-gradient-to-b from-[#FFA36A] to-[#00d4ff]">
-        {/* Title */}
         <section>
-          <div className="pb-5 pt-10">
-            {" "}
-            {data.map((item) => {
-              return (
-                <h1
-                  key={item._id}
-                  className="text-3xl font-bold uppercase text-white"
-                >
-                  {item.name}
-                </h1>
-              );
-            })}{" "}
-          </div>
-          <div className="py-1"></div>
+          {" "}
+          {data.map((item) => {
+            return (
+              <h1
+                key={item._id}
+                className="text-3xl font-bold uppercase text-white"
+              >
+                {item.name}
+              </h1>
+            );
+          })}{" "}
         </section>
-        {/* Card */}
         <section className="container grid grid-cols-1 place-items-center p-5">
           {data.map((item) =>
             item.flashCard.map((flash, index) => {
@@ -69,7 +64,6 @@ const FlashCard = ({ data }: FlashData) => {
             h-60 w-[95%] bg-white/10 text-white md:w-[75%] xl:w-[50%] `}
                   key={flash._key}
                 >
-                  {/* Flip icon & card count */}
                   <div className="flex flex-row justify-between p-2">
                     <div className="" onClick={handleFlip}>
                       {`${index}/${numberOfQuestion.current}`}
@@ -78,34 +72,25 @@ const FlashCard = ({ data }: FlashData) => {
                       <CgEditFlipH className="text-3xl " />
                     </div>
                   </div>
-                  {/* Question */}
                   <div
                     className={`${
                       isFlip && "hidden"
                     } flex h-[70%] items-center justify-center px-3 text-center`}
                   >
-                    <p className="w-[70%] text-lg md:text-2xl ">
-                      {" "}
-                      {flash.question}{" "}
-                    </p>
+                    <p className="w-[70%] "> {flash.question} </p>
                   </div>
-                  {/* Answer */}
                   <div
                     className={`${
                       !isFlip && "hidden"
                     } flex h-[70%] items-center justify-center px-3 text-center`}
                   >
-                    <p className="w-[90%] text-lg md:w-[70%] md:text-2xl  ">
-                      {" "}
-                      {flash.reponse}{" "}
-                    </p>
+                    <p className="w-[70%] "> {flash.reponse} </p>
                   </div>
                 </div>
               );
             })
           )}
-          {/* Arrow buttons */}
-          <div className="grid grid-cols-3 gap-10 py-10">
+          <div className="grid grid-cols-3 gap-10 py-5">
             {count === 0 ? (
               <button disabled>
                 {" "}
@@ -116,14 +101,14 @@ const FlashCard = ({ data }: FlashData) => {
                 <BiLeftArrow className="text-3xl text-gray-300" />
               </button>
             )}
-            <div className="flex items-center font-bold uppercase text-white">
+            <div className="font-bold uppercase text-white flex items-center">
               <p>Terminer</p>
             </div>
             <div className="flex justify-end">
               {count === numberOfQuestion.current ? (
-                <button disabled>
+                <button className="text-gray-600" disabled>
                   {" "}
-                  <BiRightArrow className=" text-3xl" />
+                  <BiRightArrow className="t text-3xl" />
                 </button>
               ) : (
                 <button onClick={setNextFlash}>
