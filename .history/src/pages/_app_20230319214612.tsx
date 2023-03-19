@@ -29,7 +29,10 @@ const MyApp: AppType<{ session: Session | null }> = ({
           property="og:description"
           content="Neuroscience based application to ice your code interview"
         />
-        <meta property="og:image" content="logo.png" />
+        <meta
+          property="og:image"
+          content="https://codice-it.vercel.appfavicon.ico"
+        />
 
         {/* <!-- Twitter Meta Tags --> */}
         <meta name="twitter:card" content="logo.png" />

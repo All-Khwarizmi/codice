@@ -29,10 +29,13 @@ const MyApp: AppType<{ session: Session | null }> = ({
           property="og:description"
           content="Neuroscience based application to ice your code interview"
         />
-        <meta property="og:image" content="logo.png" />
+        <meta
+          property="og:image"
+          content="https://codice-it.vercel.appfavicon.ico"
+        />
 
         {/* <!-- Twitter Meta Tags --> */}
-        <meta name="twitter:card" content="logo.png" />
+        <meta name="twitter:card" content="summary_large_image" />
         <meta property="twitter:domain" content="codice-it.vercel.app" />
         <meta property="twitter:url" content="https://codice-it.vercel.app/" />
         <meta name="twitter:title" content="Codice" />
@@ -40,7 +43,10 @@ const MyApp: AppType<{ session: Session | null }> = ({
           name="twitter:description"
           content="Neuroscience based application to ice your code interview"
         />
-        <meta name="twitter:image" content="logo.png" />
+        <meta
+          name="twitter:image"
+          content="logo.png"
+        />
 
         <link rel="icon" href="favicon.ico" />
       </Head>
