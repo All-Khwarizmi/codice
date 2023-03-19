@@ -19,8 +19,7 @@ const MyApp: AppType<{ session: Session | null }> = ({
           name="description"
           content="Neuroscience based application to ice your code interview "
         />
-        <meta property="og:image" content="favicon.ico"></meta>
-        <meta name="twitter:image" content="favicon.ico"></meta>
+        <meta property="og:image" content=""></meta>
         <link rel="icon" href="favicon.ico" />
       </Head>
 

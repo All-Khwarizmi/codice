@@ -1,6 +1,6 @@
 import { client } from 'lib/sanity-client';
 
-import {  DECKBYTECHNO, DeckByTechnoArr } from 'queries/queries';
+import { DeckByTechno, DECKBYTECHNO, DeckByTechnoArr } from 'queries/queries';
 
 
 

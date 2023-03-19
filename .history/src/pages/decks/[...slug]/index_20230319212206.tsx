@@ -15,7 +15,7 @@ const Decks = ({ decks }: DeckByTechnoArr) => {
             return item.deck.map((deck) => {
               // console.log("deck", deck);
               return (
-                <div className="max-w-md text-white lg:max-w-xs" key={deck._id}>
+                <div className="max-w-xs text-white lg:max-w-xs" key={deck._id}>
                   <Link
                     href={{
                       pathname: `/flash/${deck.name}`,
