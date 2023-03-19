@@ -8,20 +8,15 @@ const Decks = ({ decks }: DeckByTechnoArr) => {
  // console.log(decks)
   return (
     <>
-      <main className="flex min-h-screen flex-col items-center justify-center bg-gradient-to-b from-[#FFA36A] to-[#00d4ff]">
+      <main className="flex min-h-screen flex-col items-center justify-center bg-gradient-to-b from-[#2e026d] to-[#15162c]">
         <div className="grid grid-cols-1 gap-3 p-20  md:grid-cols-2 md:gap-32 xl:grid-cols-4 xl:gap-10 ">
           {decks.map((item) => {
-            // console.log("item",item)
-            return item.deck.map((deck) => {
-              // console.log("deck", deck);
+           // console.log("item",item)
+           return item.deck.map(deck => {
+            // console.log("deck", deck);
               return (
                 <div className="max-w-xs text-white lg:max-w-sm" key={deck._id}>
-                  <Link
-                    href={{
-                      pathname: `/flash/${deck.name}`,
-                      query: { deck: deck.name },
-                    }}
-                  >
+                  <Link href={{pathname:`/flash/${deck.name}`, query: {deck: deck.name}}}>
                     <img
                       className="rounded-lg rounded-b-none"
                       src={deck.image?.asset.url}
@@ -60,7 +55,8 @@ const Decks = ({ decks }: DeckByTechnoArr) => {
                   </Link>
                 </div>
               );
-            });
+            })
+            ;
           })}
         </div>
       </main>
