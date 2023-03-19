@@ -46,7 +46,7 @@ export const DECKBYNAME = groq`
   name == $name
  ]{
   _id,
-  name,
+  
     description,
     difficulty ->{
       name,

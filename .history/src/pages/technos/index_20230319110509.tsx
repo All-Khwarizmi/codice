@@ -2,7 +2,7 @@ import { client } from "lib/sanity-client";
 import Link from "next/link";
 import { AllTechnos, ALLTECHNOS } from "queries/queries";
 
-// Enable NextJS to cache and dedupe queries
+
 
 const Technos = ({ technos }: AllTechnos) => {
   return (
@@ -12,7 +12,7 @@ const Technos = ({ technos }: AllTechnos) => {
           {technos.map((techno) => {
             return (
               <div className="" key={techno._id}>
-                <Link className="" href={`./decks/${techno.name}`}>
+                <Link className="" href={ { }}>
                   <img
                     className="max-w-xs rounded-lg text-white lg:max-w-sm"
                     src={techno.image.asset.url}

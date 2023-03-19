@@ -13,10 +13,10 @@ const Decks = ({ decks }: DeckByTechnoArr) => {
           {decks.map((item) => {
            // console.log("item",item)
            return item.deck.map(deck => {
-            // console.log("deck", deck);
+            console.log("deck", deck);
               return (
                 <div className="max-w-xs text-white lg:max-w-sm" key={deck._id}>
-                  <Link href={{pathname:`/flash/${deck.name}`, query: {deck: deck.name}}}>
+                  <Link href={{pathname:`./flash/${deck.name}`, query: {deck: deck.name}}}>
                     <img
                       className="rounded-lg rounded-b-none"
                       src={deck.image?.asset.url}
@@ -70,8 +70,12 @@ type Params = {
   params: {slug : Array<string>}
 }
 export const getServerSideProps = async ({params}: Params) => {
- 
-  const decks = await client.fetch(DECKBYTECHNO, { technoName: params.slug.toString()});
+  /* console.log(
+    "Params",
+    params.slug[0],
+    params.slug.map((item) => item).toString()
+  ); */
+  const decks = await client.fetch(DECKBYTECHNO, { technoName: params.slug.map(item => item).toString()});
 
   return {
     props: {

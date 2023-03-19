@@ -1,4 +1,5 @@
 import { client } from "lib/sanity-client";
+
 import Link from "next/link";
 import { AllTechnos, ALLTECHNOS } from "queries/queries";
 

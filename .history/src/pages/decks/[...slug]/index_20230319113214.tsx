@@ -70,8 +70,12 @@ type Params = {
   params: {slug : Array<string>}
 }
 export const getServerSideProps = async ({params}: Params) => {
- 
-  const decks = await client.fetch(DECKBYTECHNO, { technoName: params.slug.toString()});
+  /* console.log(
+    "Params",
+    params.slug[0],
+    params.slug.map((item) => item).toString()
+  ); */
+  const decks = await client.fetch(DECKBYTECHNO, { technoName: params.slugtoString()});
 
   return {
     props: {
