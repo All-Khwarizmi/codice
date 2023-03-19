@@ -27,7 +27,7 @@ const Decks = ({ decks }: DeckByTechnoArr) => {
                       src={deck.image?.asset.url}
                       alt={`${deck.name} image`}
                     />
-                    <div className="rounded-lg  rounded-t-none bg-slate-600">
+                    <div className="rounded-lg  rounded-t-none bg-sky-200">
                       <div className="pl-5">
                         <p className="text-md pt-5 pb-3 font-bold uppercase">
                           {deck.name}
