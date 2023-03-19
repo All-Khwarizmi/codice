@@ -18,7 +18,7 @@ const Technos = ({technos}: AllTechnos) => {
    
       <>
         <main className="flex min-h-screen flex-col items-center justify-center bg-gradient-to-b from-[#2e026d] to-[#15162c]">
-          <div className="grid grid-cols-1 gap-10 p-10 md:gap-32  md:grid-cols-2 xl:grid-cols-4 md:p-20">
+          <div className="grid grid-cols-1 gap-3 p-10 md:  md:grid-cols-2">
             {technos.map((techno) => {
               return (
                 <div
