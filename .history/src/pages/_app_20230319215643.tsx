@@ -42,7 +42,7 @@ const MyApp: AppType<{ session: Session | null }> = ({
         />
         <meta name="twitter:image" content="logo.png" />
 
-        <link rel="icon" href="/logo.png" />
+        <link rel="icon" href="logo." />
       </Head>
 
       <Component {...pageProps} />
