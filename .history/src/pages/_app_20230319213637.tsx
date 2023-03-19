@@ -28,11 +28,8 @@ const MyApp: AppType<{ session: Session | null }> = ({
         />
         <meta property="og:image" content="favicon.ico"></meta>
         {/* Twiter */}
-        <meta
-          name="twitter:card"
-          content="Neuroscience based application to ice your code interview "
-        />
-
+        <meta name="twitter:card" content="summary" />
+        <meta name="twitter:site" content="@yourtwitterhandle" />
         <meta
           name="twitter:title"
           content="Title of this page, same as title tag"

@@ -32,7 +32,7 @@ const MyApp: AppType<{ session: Session | null }> = ({
           name="twitter:card"
           content="Neuroscience based application to ice your code interview "
         />
-
+        <meta name="twitter:site" content="@yourtwitterhandle" />
         <meta
           name="twitter:title"
           content="Title of this page, same as title tag"

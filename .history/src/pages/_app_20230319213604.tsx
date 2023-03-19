@@ -28,20 +28,11 @@ const MyApp: AppType<{ session: Session | null }> = ({
         />
         <meta property="og:image" content="favicon.ico"></meta>
         {/* Twiter */}
-        <meta
-          name="twitter:card"
-          content="Neuroscience based application to ice your code interview "
-        />
-
-        <meta
-          name="twitter:title"
-          content="Title of this page, same as title tag"
-        />
-        <meta name="twitter:url" content="https://codice-it.vercel.app//" />
-        <meta
-          name="twitter:description"
-          content="Neuroscience based application to ice your code interview "
-        />
+        <meta name="twitter:card" content="summary"/>
+<meta name="twitter:site" content="@yourtwitterhandle"/>
+<meta name="twitter:title" content="Title of this page, same as title tag"/>
+<meta name="twitter:url" content="http://fullurl.com/to-this/page/"/>
+<meta name="twitter:description" content="Description of this page, same as meta description"></meta>
         <meta name="twitter:image" content="favicon.ico"></meta>
         <link rel="icon" href="favicon.ico" />
       </Head>
