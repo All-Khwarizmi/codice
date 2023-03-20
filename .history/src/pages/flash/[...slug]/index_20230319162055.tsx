@@ -6,7 +6,6 @@ import { CgEditFlipH } from "react-icons/cg";
 import { BiLeftArrow } from "react-icons/bi";
 import { BiRightArrow } from "react-icons/bi";
 import { useRouter } from "next/router";
-import Header from "~/components/Header";
 
 const FlashCard = ({ data }: FlashData) => {
   const [count, setCount] = useState<number>(0);
@@ -44,7 +43,6 @@ const FlashCard = ({ data }: FlashData) => {
   };
   return (
     <>
-      <Header />
       <main className="flex min-h-screen flex-col items-center justify-center bg-gradient-to-b from-[#FFA36A] to-[#00d4ff]">
         {/* Title */}
         <section>

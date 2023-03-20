@@ -3,13 +3,11 @@ import { NextPage } from "next";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { DeckByTechno, DECKBYTECHNO, DeckByTechnoArr } from "queries/queries";
-import Header from "~/components/Header";
 
 const Decks = ({ decks }: DeckByTechnoArr) => {
  // console.log(decks)
   return (
     <>
-      <Header />
       <main className="flex min-h-screen flex-col items-center justify-center bg-gradient-to-b from-[#FFA36A] to-[#00d4ff]">
         <div className="grid grid-cols-1 gap-3 p-20  md:grid-cols-2 md:gap-32 xl:grid-cols-4 xl:gap-10 ">
           {decks.map((item) => {

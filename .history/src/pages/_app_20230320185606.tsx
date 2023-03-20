@@ -6,7 +6,6 @@ import { api } from "~/utils/api";
 
 import "~/styles/globals.css";
 import Head from "next/head";
-import Header from "~/components/Header";
 
 const MyApp: AppType<{ session: Session | null }> = ({
   Component,
@@ -14,7 +13,7 @@ const MyApp: AppType<{ session: Session | null }> = ({
 }) => {
   return (
     <SessionProvider session={session}>
-      <Header />
+  <
 
       <Component {...pageProps} />
     </SessionProvider>

@@ -1,7 +1,6 @@
 import { client } from "lib/sanity-client";
 import Link from "next/link";
 import { AllTechnos, ALLTECHNOS } from "queries/queries";
-import Header from "~/components/Header";
 
 
 const Technos = ({ technos }: AllTechnos) => {

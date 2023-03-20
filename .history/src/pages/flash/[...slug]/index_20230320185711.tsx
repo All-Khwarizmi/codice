@@ -6,7 +6,6 @@ import { CgEditFlipH } from "react-icons/cg";
 import { BiLeftArrow } from "react-icons/bi";
 import { BiRightArrow } from "react-icons/bi";
 import { useRouter } from "next/router";
-import Header from "~/components/Header";
 
 const FlashCard = ({ data }: FlashData) => {
   const [count, setCount] = useState<number>(0);

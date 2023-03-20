@@ -3,7 +3,6 @@ import { NextPage } from "next";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { DeckByTechno, DECKBYTECHNO, DeckByTechnoArr } from "queries/queries";
-import Header from "~/components/Header";
 
 const Decks = ({ decks }: DeckByTechnoArr) => {
  // console.log(decks)
