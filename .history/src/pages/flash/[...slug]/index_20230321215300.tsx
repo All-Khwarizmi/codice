@@ -79,7 +79,7 @@ const FlashCard = ({ data }: FlashData) => {
                       {`${index}/${numberOfQuestion.current}`}
                     </div>
                     <div className="" onClick={handleFlip}>
-                      <CgEditFlipH className="text-3xl cursor-pointer" />
+                      <CgEditFlipH className="text-3xl pointer" />
                     </div>
                   </div>
                   {/* Question */}
