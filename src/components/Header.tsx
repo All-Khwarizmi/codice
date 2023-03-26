@@ -10,6 +10,10 @@ const Header = () => {
         name="description"
         content="Neuroscience based application to ice your code interview"
       />
+      <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, viewport-fit=cover"
+      />
 
       {/* <!-- Facebook Meta Tags --> */}
       <meta property="og:url" content="https://codice-it.vercel.app/" />
