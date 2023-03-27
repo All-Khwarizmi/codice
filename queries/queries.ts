@@ -16,7 +16,10 @@ export const ALLTECHNOS = groq`
 }
 `;
 
-export type AllDecks = Deck[]
+
+export type AllDecks = {
+  decks: Deck[];
+};
 export const ALLDECKS = groq`
 *[_type == "deck"]{
   flashCard,
@@ -57,6 +60,8 @@ export const DECKBYNAME = groq`
     
  }
 `;
+
+
 
 export interface DeckByTechno {
 _id: string

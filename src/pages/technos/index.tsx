@@ -3,6 +3,7 @@ import Link from "next/link";
 import { AllTechnos, ALLTECHNOS } from "queries/queries";
 import Header from "~/components/Header";
 
+// Page that works with the /decks[...slug] page. Cons: in order to add some filtering, I had to add some query params that obviously dont work in SSG. So since it uses SSR, it's stupidly slow. Often takes 4-5 secs to load from a cold start. I removed this technos filter page and fetched all the decks from getStaticProps. I"ll add a filtering logic later on. (I have a component already made, since it was the idea at the beginning anyway, just have to polish and get it right for the need)
 
 const Technos = ({ technos }: AllTechnos) => {
   return (
