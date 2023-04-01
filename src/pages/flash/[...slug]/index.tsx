@@ -103,7 +103,7 @@ const FlashCard = ({ data }: FlashData) => {
       // "http://localhost:3000/api/getUserRecalls"
       // env.NEXT_PUBLIC_API_GET_USER_RECALLS_ENDPOINT
       const dataRecall = fetch(
-        "http://localhost:3000/api/getUserTopicRecall",
+        env.NEXT_PUBLIC_API_GET_USER_RECALLS_ENDPOINT,
         options
       )
         .then((response) => {
@@ -225,7 +225,7 @@ const FlashCard = ({ data }: FlashData) => {
         // env.NEXT_PUBLIC_API_GET_USER_RECALLS_ENDPOINT
         console.log("Fetching fresh data when count changes");
         const dataRecall = fetch(
-          "http://localhost:3000/api/getUserTopicRecall",
+          env.NEXT_PUBLIC_API_GET_USER_RECALLS_ENDPOINT,
           options
         )
           .then((response) => {
@@ -238,76 +238,76 @@ const FlashCard = ({ data }: FlashData) => {
               setIsRecallInDB(false);
             }
             const typedData = recallsScquema.safeParse(data);
-             if (typedData.success) {
-               const safeData = typedData.data;
-               console.log("safeData ", safeData);
-               setIsError(false);
-               setIsRecallInDB(true);
-               setFetchedData(safeData);
+            if (typedData.success) {
+              const safeData = typedData.data;
+              console.log("safeData ", safeData);
+              setIsError(false);
+              setIsRecallInDB(true);
+              setFetchedData(safeData);
 
-               let preSortedRecallsFilter: any = [];
-               let filterFilterMode: number = 3;
-               const recallNameArr: string[] = [];
-               fetchedData?.recall.map((item) =>
-                 recallNameArr.push(item.questionName)
-               );
+              let preSortedRecallsFilter: any = [];
+              let filterFilterMode: number = 3;
+              const recallNameArr: string[] = [];
+              fetchedData?.recall.map((item) =>
+                recallNameArr.push(item.questionName)
+              );
 
-               data.map((deck) =>
-                 deck.flashCard.map((flashCard) => {
-                   safeData?.recall.map((recall) => {
-                     if (recallNameArr.indexOf(flashCard.name) !== -1) {
-                       if (recall.questionName === flashCard.name) {
-                         if (recall.quality !== 5) {
-                           filterFilterMode = recall.quality;
-                           return preSortedRecallsFilter.push([
-                             flashCard.name,
-                             filterFilterMode,
-                           ]);
-                         }
-                       }
-                     }
-                   });
-                   if (recallNameArr.indexOf(flashCard.name) === -1) {
-                     preSortedRecallsFilter.push([
-                       flashCard.name,
-                       filterFilterMode,
-                     ]);
-                   }
-                 })
-               );
-               let sortedRecallsFilterMode = countingSort(
-                 preSortedRecallsFilter
-               );
+              data.map((deck) =>
+                deck.flashCard.map((flashCard) => {
+                  safeData?.recall.map((recall) => {
+                    if (recallNameArr.indexOf(flashCard.name) !== -1) {
+                      if (recall.questionName === flashCard.name) {
+                        if (recall.quality !== 5) {
+                          filterFilterMode = recall.quality;
+                          return preSortedRecallsFilter.push([
+                            flashCard.name,
+                            filterFilterMode,
+                          ]);
+                        }
+                      }
+                    }
+                  });
+                  if (recallNameArr.indexOf(flashCard.name) === -1) {
+                    preSortedRecallsFilter.push([
+                      flashCard.name,
+                      filterFilterMode,
+                    ]);
+                  }
+                })
+              );
+              let sortedRecallsFilterMode = countingSort(
+                preSortedRecallsFilter
+              );
 
-               setsortedRecallsFilterMode(sortedRecallsFilterMode);
+              setsortedRecallsFilterMode(sortedRecallsFilterMode);
 
-               // Check if recall has been done today
-               let hasRecallBeenDoneToday: any = [];
-               safeData?.recall.map((item) => {
-                 if (
-                   differenceInDays(new Date(item.lastRecall), new Date()) === 0
-                 ) {
-                   hasRecallBeenDoneToday.push(item);
-                 }
-               });
-               console.log("hasRecallBeenDoneToday ", hasRecallBeenDoneToday);
-               if (hasRecallBeenDoneToday.length) {
-                 // Check if all recall's quality = 5. If so display a message telling it
-                 setHasRecallBeenDoneToday(hasRecallBeenDoneToday.length);
-                 setIsFilterMode(true);
-                 setNumberOfQuestion(sortedRecallsFilterMode.length);
-               } else {
-                 setNumberOfQuestion(sortedRecalls.length);
-               }
-               setRender(!render);
-               console.log("isFiltermode", isFilterMode);
-               console.log(
-                 "sortedRecallsFilterMode lenght",
-                 sortedRecallsFilterMode.length
-               );
-             } else if (!typedData.success) {
-               setIsError(true);
-             }
+              // Check if recall has been done today
+              let hasRecallBeenDoneToday: any = [];
+              safeData?.recall.map((item) => {
+                if (
+                  differenceInDays(new Date(item.lastRecall), new Date()) === 0
+                ) {
+                  hasRecallBeenDoneToday.push(item);
+                }
+              });
+              console.log("hasRecallBeenDoneToday ", hasRecallBeenDoneToday);
+              if (hasRecallBeenDoneToday.length) {
+                // Check if all recall's quality = 5. If so display a message telling it
+                setHasRecallBeenDoneToday(hasRecallBeenDoneToday.length);
+                setIsFilterMode(true);
+                setNumberOfQuestion(sortedRecallsFilterMode.length);
+              } else {
+                setNumberOfQuestion(sortedRecalls.length);
+              }
+              setRender(!render);
+              console.log("isFiltermode", isFilterMode);
+              console.log(
+                "sortedRecallsFilterMode lenght",
+                sortedRecallsFilterMode.length
+              );
+            } else if (!typedData.success) {
+              setIsError(true);
+            }
             // console.log("typeddata", typata);
             return data;
           })
@@ -526,7 +526,7 @@ const FlashCard = ({ data }: FlashData) => {
       },
       body: JSON.stringify(recallData),
     };
-    fetch("http://localhost:3000/api/addRecall", options)
+    fetch(env.NEXT_PUBLIC_API_AUTH_HEADERS_ADD_RECALL, options)
       .then((response) => {
         console.log("Response in fetch Add recall with fresh data", response);
         if (quality === 5 && response.ok) {
@@ -640,7 +640,7 @@ const FlashCard = ({ data }: FlashData) => {
           },
           body: JSON.stringify(recallData),
         };
-        fetch("http://localhost:3000/api/updateRecall", options)
+        fetch(env.NEXT_PUBLIC_API_AUTH_HEADERS_KEY_UPDATE_USER_RECALL, options)
           .then((response) => {
             console.log("Response in fetch update with fresh data", response);
             if (quality === 5 && response.ok) {
@@ -674,7 +674,7 @@ const FlashCard = ({ data }: FlashData) => {
           },
           body: JSON.stringify(oldRecallData),
         };
-        fetch("http://localhost:3000/api/updateRecall", options)
+        fetch(env.NEXT_PUBLIC_API_AUTH_HEADERS_KEY_UPDATE_USER_RECALL, options)
           .then((response) => {
             console.log("Response in fetch update with old data", response);
             if (quality === 5 && response.ok) {
