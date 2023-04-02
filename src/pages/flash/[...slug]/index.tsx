@@ -101,10 +101,10 @@ const FlashCard = ({ data }: FlashData) => {
     if (!isStudyMode) {
       if (status === "authenticated") {
         // "http://localhost:3000/api/getUserTopicRecall"
-        // env.NEXT_PUBLIC_API_GET_USER_RECALLS_ENDPOINT
+        // env.NEXT_PUBLIC_API_GET_USER_TOPIC_RECALL_ENDPOINT
         console.log("Fetching fresh data when count changes");
         const dataRecall = fetch(
-          "http://localhost:3000/api/getUserTopicRecall",
+          env.NEXT_PUBLIC_API_GET_USER_TOPIC_RECALL_ENDPOINT,
           options
         )
           .then((response) => {
@@ -178,20 +178,19 @@ const FlashCard = ({ data }: FlashData) => {
                 setIsFilterMode(true);
                 setNumberOfQuestion(sortedRecallsFilterMode.length);
                 if (sortedRecallsFilterMode.length !== 0) {
-                setQuestion(sortedRecallsFilterMode[count]![0]);
-                console.log(sortedRecallsFilterMode[count]![0]);
-              } else {
-                setIsTestPossible(false);
-              }
+                  setQuestion(sortedRecallsFilterMode[count]![0]);
+                  console.log(sortedRecallsFilterMode[count]![0]);
+                } else {
+                  setIsTestPossible(false);
+                }
 
                 console.log("setIsTestPossible(false)");
               } else {
-                if (sortedRecallsFilterMode.length){
-                   setIsTestPossible(true);
+                if (sortedRecallsFilterMode.length) {
+                  setIsTestPossible(true);
                 }
-                 
               }
-             
+
               console.log("isFiltermode", isFilterMode);
               console.log(
                 "sortedRecallsFilterMode lenght",
@@ -214,10 +213,6 @@ const FlashCard = ({ data }: FlashData) => {
               "sortedRecallsFilterMode.length",
               sortedRecallsFilterMode.length
             );
-            // Keeping track of questions
-        /*     if (numberOfQuestion === count) {
-              setCount(0);
-            } */
           });
       }
     } else if (isStudyMode) {
@@ -372,18 +367,19 @@ const FlashCard = ({ data }: FlashData) => {
         Authorization: env.NEXT_PUBLIC_API_AUTH_HEADERS_ADD_RECALL,
       },
       body: JSON.stringify(recallData),
-    };
-    fetch("http://localhost:3000/api/addRecall", options)
+    }; //NEXT_PUBLIC_API_ADD_RECALL_ENDPOINT
+    // "http://localhost:3000/api/addRecall"
+    fetch(env.NEXT_PUBLIC_API_ADD_RECALL_ENDPOINT, options)
       .then((response) => {
         console.log("Response in fetch Add recall with fresh data", response);
-          if (quality === 5 && response.ok) {
-            if (numberOfQuestion>1){
-              setNumberOfQuestion(numberOfQuestion - 1);
-              setCount(0);
-            } else {
-              setIsTestPossible(false)
-            }
+        if (quality === 5 && response.ok) {
+          if (numberOfQuestion > 1) {
+            setNumberOfQuestion(numberOfQuestion - 1);
+            setCount(0);
+          } else {
+            setIsTestPossible(false);
           }
+        }
         return response.json();
       })
       .then((data) => {
@@ -472,12 +468,14 @@ const FlashCard = ({ data }: FlashData) => {
           },
           body: JSON.stringify(recallData),
         };
-        fetch("http://localhost:3000/api/updateRecall", options)
+        // "http://localhost:3000/api/updateRecall"
+        // NEXT_PUBLIC_API_UPDATE_USER_RECALL_ENDPOINT
+        fetch(env.NEXT_PUBLIC_API_UPDATE_USER_RECALL_ENDPOINT, options)
           .then((response) => {
             console.log("Response in fetch update with fresh data", response);
             if (quality === 5 && response.ok) {
               setNumberOfQuestion(numberOfQuestion - 1);
-             setCount(0);
+              setCount(0);
             }
             return response.json();
           })
@@ -497,16 +495,19 @@ const FlashCard = ({ data }: FlashData) => {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
-            Authorization: env.NEXT_PUBLIC_API_AUTH_HEADERS_KEY_UPDATE_USER_RECALL,
+            Authorization:
+              env.NEXT_PUBLIC_API_AUTH_HEADERS_KEY_UPDATE_USER_RECALL,
           },
           body: JSON.stringify(oldRecallData),
         };
-        fetch("http://localhost:3000/api/updateRecall", options)
+        // "http://localhost:3000/api/updateRecall"
+        // NEXT_PUBLIC_API_UPDATE_USER_RECALL_ENDPOINT
+        fetch(env.NEXT_PUBLIC_API_UPDATE_USER_RECALL_ENDPOINT, options)
           .then((response) => {
             console.log("Response in fetch update with old data", response);
             if (quality === 5 && response.ok) {
               setNumberOfQuestion(numberOfQuestion - 1);
-               setCount(0);
+              setCount(0);
             }
             return response.json();
           })
