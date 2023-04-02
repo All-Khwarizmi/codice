@@ -77,14 +77,13 @@ const FlashCard = ({ data }: FlashData) => {
     Array<[string, number]>
   >([]);
   const [isStudyMode, setIsStudyMode] = useState<boolean>(true);
-  const [isTestPossible, setIsTestPossible] = useState<boolean>(true);
+  const [isTestPossible, setIsTestPossible] = useState<boolean>();
   const [isFilterMode, setIsFilterMode] = useState<boolean>(false);
   const [fetchedData, setFetchedData] = useState<RecallData>();
   const [isError, setIsError] = useState<boolean>(false);
   const [show, setShow] = useState<boolean>(false);
   const [isRecallInDB, setIsRecallInDB] = useState<boolean>(false);
 
-  //  console.log("sortedRecallsFilterMode", sortedRecallsFilterMode);
   // Fetching all user recalls
   const options = {
     method: "POST",
@@ -105,7 +104,7 @@ const FlashCard = ({ data }: FlashData) => {
         // env.NEXT_PUBLIC_API_GET_USER_RECALLS_ENDPOINT
         console.log("Fetching fresh data when count changes");
         const dataRecall = fetch(
-          env.NEXT_PUBLIC_API_GET_USER_RECALLS_ENDPOINT,
+          "http://localhost:3000/api/getUserTopicRecall",
           options
         )
           .then((response) => {
@@ -117,7 +116,7 @@ const FlashCard = ({ data }: FlashData) => {
             if (dataRecall.message === "No recall in database") {
               setIsRecallInDB(false);
             }
-            const typedData = recallsScquema.safeParse(data);
+            const typedData = recallsScquema.safeParse(dataRecall);
             if (typedData.success) {
               const safeData = typedData.data;
               console.log("safeData ", safeData);
@@ -178,10 +177,21 @@ const FlashCard = ({ data }: FlashData) => {
                 setHasRecallBeenDoneToday(hasRecallBeenDoneToday.length);
                 setIsFilterMode(true);
                 setNumberOfQuestion(sortedRecallsFilterMode.length);
+                if (sortedRecallsFilterMode.length !== 0) {
+                setQuestion(sortedRecallsFilterMode[count]![0]);
+                console.log(sortedRecallsFilterMode[count]![0]);
               } else {
-                setNumberOfQuestion(sortedRecalls.length);
+                setIsTestPossible(false);
               }
 
+                console.log("setIsTestPossible(false)");
+              } else {
+                if (sortedRecallsFilterMode.length){
+                   setIsTestPossible(true);
+                }
+                 
+              }
+             
               console.log("isFiltermode", isFilterMode);
               console.log(
                 "sortedRecallsFilterMode lenght",
@@ -204,31 +214,10 @@ const FlashCard = ({ data }: FlashData) => {
               "sortedRecallsFilterMode.length",
               sortedRecallsFilterMode.length
             );
-            if (isStudyMode) {
-              if (sortedRecalls.length) {
-                setQuestion(sortedRecalls[count]![0]);
-                console.log(sortedRecalls[count]![0]);
-              }
-            } else {
-              if (isFilterMode) {
-                if (sortedRecallsFilterMode.length) {
-                  setQuestion(sortedRecallsFilterMode[count]![0]);
-                  console.log(sortedRecallsFilterMode[count]![0]);
-                } else {
-                  setIsTestPossible(false);
-                }
-              } else {
-                if (sortedRecalls.length) {
-                  setQuestion(sortedRecalls[count]![0]);
-                  console.log(sortedRecalls[count]![0]);
-                }
-              }
-            }
-
             // Keeping track of questions
-            if (numberOfQuestion === count) {
+        /*     if (numberOfQuestion === count) {
               setCount(0);
-            }
+            } */
           });
       }
     } else if (isStudyMode) {
@@ -250,6 +239,7 @@ const FlashCard = ({ data }: FlashData) => {
       if (numberOfQuestion === count) {
         setCount(0);
       }
+
     }
   }, [status, count, isStudyMode]);
 
@@ -267,17 +257,14 @@ const FlashCard = ({ data }: FlashData) => {
   // TODO : choose between normal sorted and filtered
   const setNextFlash = () => {
     if (isFilterMode) {
-      if (sortedRecallsFilterMode.length === 1 && count === 1) {
-        setIsTestPossible(false);
-      } else {
-        if (count === sortedRecallsFilterMode.length - 1) {
+
+        if (count >= sortedRecallsFilterMode.length - 1) {
           setIsFlip(false);
           setCount(0);
         } else {
           setIsFlip(false);
           setCount(count + 1);
         }
-      }
     } else {
       if (count === sortedRecalls.length - 1) {
         setIsFlip(false);
@@ -386,18 +373,17 @@ const FlashCard = ({ data }: FlashData) => {
       },
       body: JSON.stringify(recallData),
     };
-    fetch(env.NEXT_PUBLIC_API_AUTH_HEADERS_ADD_RECALL, options)
+    fetch("http://localhost:3000/api/addRecall", options)
       .then((response) => {
         console.log("Response in fetch Add recall with fresh data", response);
-        if (quality === 5 && response.ok) {
-          setsortedRecallsFilterMode((sortedRecallsFilterMode) => {
-            return sortedRecallsFilterMode.filter((item) => {
-              if (item[0] !== question) {
-                return item;
-              }
-            });
-          });
-        }
+          if (quality === 5 && response.ok) {
+            if (numberOfQuestion>1){
+              setNumberOfQuestion(numberOfQuestion - 1);
+              setCount(0);
+            } else {
+              setIsTestPossible(false)
+            }
+          }
         return response.json();
       })
       .then((data) => {
@@ -418,17 +404,7 @@ const FlashCard = ({ data }: FlashData) => {
 
       // Getting the current question
       const oldRecallData = hasQuestionRecall(fetchedData);
-      /*    console.log(
-        "oldRecallData",
-        oldRecallData?.map((item) => {
-          return {
-            easeFactor: item.easeFactor,
-            interval: item.interval,
-            repetitions: item.repetitions,
-          };
-        })
-      ); */
-
+   
       // Check quality is between 1-5
       const qualityCheck = qualitySchema.safeParse(quality);
       console.log("qualityCheck", qualityCheck);
@@ -496,17 +472,12 @@ const FlashCard = ({ data }: FlashData) => {
           },
           body: JSON.stringify(recallData),
         };
-        fetch(env.NEXT_PUBLIC_API_AUTH_HEADERS_KEY_UPDATE_USER_RECALL, options)
+        fetch("http://localhost:3000/api/updateRecall", options)
           .then((response) => {
             console.log("Response in fetch update with fresh data", response);
             if (quality === 5 && response.ok) {
-              setsortedRecallsFilterMode((sortedRecallsFilterMode) => {
-                return sortedRecallsFilterMode.filter((item) => {
-                  if (item[0] !== question) {
-                    return item;
-                  }
-                });
-              });
+              setNumberOfQuestion(numberOfQuestion - 1);
+             setCount(0);
             }
             return response.json();
           })
@@ -526,21 +497,16 @@ const FlashCard = ({ data }: FlashData) => {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
-            Authorization: env.NEXT_PUBLIC_API_AUTH_HEADERS_ADD_RECALL,
+            Authorization: env.NEXT_PUBLIC_API_AUTH_HEADERS_KEY_UPDATE_USER_RECALL,
           },
           body: JSON.stringify(oldRecallData),
         };
-        fetch(env.NEXT_PUBLIC_API_AUTH_HEADERS_KEY_UPDATE_USER_RECALL, options)
+        fetch("http://localhost:3000/api/updateRecall", options)
           .then((response) => {
             console.log("Response in fetch update with old data", response);
             if (quality === 5 && response.ok) {
-              setsortedRecallsFilterMode((sortedRecallsFilterMode) => {
-                return sortedRecallsFilterMode.filter((item) => {
-                  if (item[0] !== question) {
-                    return item;
-                  }
-                });
-              });
+              setNumberOfQuestion(numberOfQuestion - 1);
+               setCount(0);
             }
             return response.json();
           })
@@ -614,9 +580,9 @@ const FlashCard = ({ data }: FlashData) => {
                   className={`${
                     flash.name === question
                       ? !isStudyMode
-                        ? isTestPossible
-                          ? ""
-                          : "hidden"
+                        ? !isTestPossible
+                          ? "hidden"
+                          : ""
                         : ""
                       : "hidden"
                   }
