@@ -578,13 +578,8 @@ const FlashCard = ({ data }: FlashData) => {
               //console.log(flash)
               return (
                 <div
-                  className={`${  
-                     !isStudyMode
-                        ? !isTestPossible
-                          ? "hidden"
-                          : ""
-                        : ""
-                 
+                  className={`${
+                    !isStudyMode ? (!isTestPossible ? "hidden" : "") : ""
                   } ${flash.name === question ? "" : "hidden"}
             h-60 w-[95%] bg-white/10 text-slate-100 md:w-[75%] xl:w-[50%] `}
                   key={flash._key}
@@ -730,8 +725,8 @@ const FlashCard = ({ data }: FlashData) => {
             className={`grid  gap-10 py-10 pt-5 ${
               status === "authenticated"
                 ? isStudyMode
-                  ? "grid-cols-4"
-                  : "grid-cols-4"
+                  ? "grid-cols-3"
+                  : "grid-cols-3"
                 : "grid-cols-3"
             } `}
           >
@@ -749,30 +744,31 @@ const FlashCard = ({ data }: FlashData) => {
                 )
               ) : null}
             </div>
-            <button
-              onClick={router.back}
-              className="rounded-full bg-white/60 px-5 py-3 font-semibold uppercase uppercase text-gray-500 no-underline transition hover:bg-white/20 md:px-10"
-            >
-              <p>Retour</p>
-            </button>
-            {status === "authenticated" ? (
-              isStudyMode ? (
-                <button
-                  onClick={() => switchMode()}
-                  className="rounded-full bg-white/60 px-5 py-3 font-semibold uppercase uppercase text-green-500 no-underline transition hover:bg-white/20 md:px-10"
-                >
-                  <p className="text-red-500">Test</p>
-                </button>
-              ) : (
-                <button
-                  onClick={() => switchMode()}
-                  className="rounded-full bg-white/60 px-5 py-3 font-semibold uppercase uppercase text-green-500 no-underline transition hover:bg-white/20 md:px-10"
-                >
-                  <p>Study</p>
-                </button>
-              )
-            ) : null}
-
+            <div className="flex items-center w-full justify-center gap-5">
+              <button
+                onClick={router.back}
+                className="rounded-full bg-white/60 px-5 py-3 font-semibold uppercase uppercase text-gray-500 no-underline transition hover:bg-white/20 md:px-10"
+              >
+                <p>Retour</p>
+              </button>
+              {status === "authenticated" ? (
+                isStudyMode ? (
+                  <button
+                    onClick={() => switchMode()}
+                    className="rounded-full bg-white/60 px-5 py-3 font-semibold uppercase uppercase text-red-500 text-green-500 no-underline transition hover:bg-white/20 md:px-10"
+                  >
+                    <p className="">Test</p>
+                  </button>
+                ) : (
+                  <button
+                    onClick={() => switchMode()}
+                    className="rounded-full bg-white/60 px-5 py-3 font-semibold uppercase uppercase text-green-500 no-underline transition hover:bg-white/20 md:px-10"
+                  >
+                    <p>Study</p>
+                  </button>
+                )
+              ) : null}
+            </div>
             {isStudyMode ? (
               count === numberOfQuestion - 1 ? (
                 <div className="flex justify-center">
