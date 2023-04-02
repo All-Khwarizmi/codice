@@ -225,11 +225,11 @@ const FlashCard = ({ data }: FlashData) => {
       );
       setsortedRecalls(recallNameArr1);
       console.log("recallNameArr1", recallNameArr1);
-      if (sortedRecalls.length) {
-        setQuestion(sortedRecalls[count]![0]);
-        console.log(sortedRecalls[count]![0]);
+      if (recallNameArr1.length) {
+        setQuestion(recallNameArr1[count]![0]);
+        console.log(recallNameArr1[count]![0]);
       }
-      setNumberOfQuestion(sortedRecalls.length);
+      setNumberOfQuestion(recallNameArr1.length);
       // Keeping track of questions
       if (numberOfQuestion === count) {
         setCount(0);
@@ -578,15 +578,14 @@ const FlashCard = ({ data }: FlashData) => {
               //console.log(flash)
               return (
                 <div
-                  className={`${
-                    flash.name === question
-                      ? !isStudyMode
+                  className={`${  
+                     !isStudyMode
                         ? !isTestPossible
                           ? "hidden"
                           : ""
                         : ""
-                      : "hidden"
-                  }
+                 
+                  } ${flash.name === question ? "" : "hidden"}
             h-60 w-[95%] bg-white/10 text-slate-100 md:w-[75%] xl:w-[50%] `}
                   key={flash._key}
                 >
