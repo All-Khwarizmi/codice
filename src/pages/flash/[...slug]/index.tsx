@@ -84,7 +84,7 @@ const FlashCard = ({ data }: FlashData) => {
   const [show, setShow] = useState<boolean>(false);
   const [isRecallInDB, setIsRecallInDB] = useState<boolean>(false);
 
-//  console.log("sortedRecallsFilterMode", sortedRecallsFilterMode);
+  //  console.log("sortedRecallsFilterMode", sortedRecallsFilterMode);
   // Fetching all user recalls
   const options = {
     method: "POST",
@@ -97,131 +97,11 @@ const FlashCard = ({ data }: FlashData) => {
       topicName: data.map((item) => item.slug.current).toString(),
     }),
   };
-  useEffect(() => {
-    if (status === "authenticated") {
-      // console.log("status", status);
-      // "http://localhost:3000/api/getUserRecalls"
-      // env.NEXT_PUBLIC_API_GET_USER_RECALLS_ENDPOINT
-      const dataRecall = fetch(
-        env.NEXT_PUBLIC_API_GET_USER_RECALLS_ENDPOINT,
-        options
-      )
-        .then((response) => {
-          // console.log("Response", response);
-          return response.json();
-        })
-        .then((dataRecall) => {
-          // console.log("Data", data, "Data.message", data.message);
-          if (dataRecall.message === "No recall in database") {
-            setIsRecallInDB(false);
-          }
-          const typedData = recallsScquema.safeParse(dataRecall);
-          if (typedData.success) {
-            const safeData = typedData.data;
-            console.log("safeData ", safeData);
-            setIsError(false);
-            setIsRecallInDB(true);
-            setFetchedData(safeData);
-
-            let preSortedRecallsFilter: any = [];
-            let filterFilterMode: number = 3;
-            const recallNameArr: string[] = [];
-            fetchedData?.recall.map((item) =>
-              recallNameArr.push(item.questionName)
-            );
-
-            data.map((deck) =>
-              deck.flashCard.map((flashCard) => {
-                safeData?.recall.map((recall) => {
-                  if (recallNameArr.indexOf(flashCard.name) !== -1) {
-                    if (recall.questionName === flashCard.name) {
-                      if (recall.quality !== 5) {
-                        filterFilterMode = recall.quality;
-                        return preSortedRecallsFilter.push([
-                          flashCard.name,
-                          filterFilterMode,
-                        ]);
-                      }
-                    }
-                  }
-                });
-                if (recallNameArr.indexOf(flashCard.name) === -1) {
-                  preSortedRecallsFilter.push([
-                    flashCard.name,
-                    filterFilterMode,
-                  ]);
-                }
-              })
-            );
-            let sortedRecallsFilterMode = countingSort(preSortedRecallsFilter);
-
-            setsortedRecallsFilterMode(sortedRecallsFilterMode);
-
-            // Check if recall has been done today
-            let hasRecallBeenDoneToday: any = [];
-            safeData?.recall.map((item) => {
-              if (
-                differenceInDays(new Date(item.lastRecall), new Date()) === 0
-              ) {
-                hasRecallBeenDoneToday.push(item);
-              }
-            });
-            console.log("hasRecallBeenDoneToday ", hasRecallBeenDoneToday);
-            if (hasRecallBeenDoneToday.length) {
-              // Check if all recall's quality = 5. If so display a message telling it
-              setHasRecallBeenDoneToday(hasRecallBeenDoneToday.length);
-              setIsFilterMode(true);
-              setNumberOfQuestion(sortedRecallsFilterMode.length);
-            } else {
-              setNumberOfQuestion(sortedRecalls.length);
-            }
-            setRender(!render);
-            console.log("isFiltermode", isFilterMode);
-            console.log(
-              "sortedRecallsFilterMode lenght",
-              sortedRecallsFilterMode.length
-            );
-          } else if (!typedData.success) {
-            setIsError(true);
-          }
-          // console.log("typeddata", typata);
-          return dataRecall;
-        })
-        .catch((error) => {
-          console.log(error);
-        });
-         console.log("count", count);
-         console.log("question", question);
-         console.log("sortedRecalls.length", sortedRecalls.length);
-         if (isStudyMode) {
-           if (sortedRecalls.length) {
-             setQuestion(sortedRecalls[count]![0]);
-             console.log(sortedRecalls[count]![0]);
-           }
-         } else {
-           if (isFilterMode) {
-             if (sortedRecallsFilterMode.length) {
-               setQuestion(sortedRecallsFilterMode[count]![0]);
-               console.log(sortedRecallsFilterMode[count]![0]);
-             } else {
-               setIsTestPossible(false);
-             }
-           } else {
-             if (sortedRecalls.length) {
-               setQuestion(sortedRecalls[count]![0]);
-               console.log(sortedRecalls[count]![0]);
-             }
-           }
-         }
-    }
-  }, [status]);
-
   // Fetching fresh recalls data when count changes
   useEffect(() => {
     if (!isStudyMode) {
       if (status === "authenticated") {
-        // console.log("status", status);
-        // "http://localhost:3000/api/getUserRecalls"
+        // "http://localhost:3000/api/getUserTopicRecall"
         // env.NEXT_PUBLIC_API_GET_USER_RECALLS_ENDPOINT
         console.log("Fetching fresh data when count changes");
         const dataRecall = fetch(
@@ -229,7 +109,7 @@ const FlashCard = ({ data }: FlashData) => {
           options
         )
           .then((response) => {
-            // console.log("Response", response);
+            console.log("Response", response);
             return response.json();
           })
           .then((dataRecall) => {
@@ -245,17 +125,19 @@ const FlashCard = ({ data }: FlashData) => {
               setIsRecallInDB(true);
               setFetchedData(safeData);
 
+              //  Setting normal mode sorting
               let preSortedRecallsFilter: any = [];
               let filterFilterMode: number = 3;
-              const recallNameArr: string[] = [];
-              fetchedData?.recall.map((item) =>
-                recallNameArr.push(item.questionName)
+              const recallNameArr2: string[] = [];
+              safeData?.recall.map((item) =>
+                recallNameArr2.push(item.questionName)
               );
 
+              // Setting filter mode sorting
               data.map((deck) =>
                 deck.flashCard.map((flashCard) => {
                   safeData?.recall.map((recall) => {
-                    if (recallNameArr.indexOf(flashCard.name) !== -1) {
+                    if (recallNameArr2.indexOf(flashCard.name) !== -1) {
                       if (recall.questionName === flashCard.name) {
                         if (recall.quality !== 5) {
                           filterFilterMode = recall.quality;
@@ -267,7 +149,7 @@ const FlashCard = ({ data }: FlashData) => {
                       }
                     }
                   });
-                  if (recallNameArr.indexOf(flashCard.name) === -1) {
+                  if (recallNameArr2.indexOf(flashCard.name) === -1) {
                     preSortedRecallsFilter.push([
                       flashCard.name,
                       filterFilterMode,
@@ -299,7 +181,7 @@ const FlashCard = ({ data }: FlashData) => {
               } else {
                 setNumberOfQuestion(sortedRecalls.length);
               }
-              setRender(!render);
+
               console.log("isFiltermode", isFilterMode);
               console.log(
                 "sortedRecallsFilterMode lenght",
@@ -314,84 +196,62 @@ const FlashCard = ({ data }: FlashData) => {
           .catch((error) => {
             console.log(error);
           })
-          .finally(() => setRender(!render));
+          .finally(() => {
+            console.log("count", count);
+            console.log("question", question);
+            console.log("sortedRecalls.length", sortedRecalls.length);
+            console.log(
+              "sortedRecallsFilterMode.length",
+              sortedRecallsFilterMode.length
+            );
+            if (isStudyMode) {
+              if (sortedRecalls.length) {
+                setQuestion(sortedRecalls[count]![0]);
+                console.log(sortedRecalls[count]![0]);
+              }
+            } else {
+              if (isFilterMode) {
+                if (sortedRecallsFilterMode.length) {
+                  setQuestion(sortedRecallsFilterMode[count]![0]);
+                  console.log(sortedRecallsFilterMode[count]![0]);
+                } else {
+                  setIsTestPossible(false);
+                }
+              } else {
+                if (sortedRecalls.length) {
+                  setQuestion(sortedRecalls[count]![0]);
+                  console.log(sortedRecalls[count]![0]);
+                }
+              }
+            }
+
+            // Keeping track of questions
+            if (numberOfQuestion === count) {
+              setCount(0);
+            }
+          });
       }
-
-       console.log("count", count);
-       console.log("question", question);
-       console.log("sortedRecalls.length", sortedRecalls.length);
-       console.log(
-         "sortedRecallsFilterMode.length",
-         sortedRecallsFilterMode.length
-       );
-       if (isStudyMode) {
-         if (sortedRecalls.length) {
-           setQuestion(sortedRecalls[count]![0]);
-           console.log(sortedRecalls[count]![0]);
-         }
-       } else {
-         if (isFilterMode) {
-           if (sortedRecallsFilterMode.length) {
-             setQuestion(sortedRecallsFilterMode[count]![0]);
-             console.log(sortedRecallsFilterMode[count]![0]);
-           } else {
-             setIsTestPossible(false);
-           }
-         } else {
-           if (sortedRecalls.length) {
-             setQuestion(sortedRecalls[count]![0]);
-             console.log(sortedRecalls[count]![0]);
-           }
-         }
-       }
-    }
-  }, [count, isStudyMode]);
-
-  useEffect(() => {
-    let preSortedRecalls: any = [];
-    let filter: number = 3;
-    data.map((deck) =>
-      deck.flashCard.map((flashCard) => {
-        fetchedData?.recall.map((recall) => {
-          if (recall.questionName === flashCard.name) {
-            return (filter = recall.quality);
-          }
-        });
-        preSortedRecalls.push([flashCard.name, filter]);
-      })
-    );
-    let sortedRecalls = countingSort(preSortedRecalls);
-
-    setsortedRecalls(sortedRecalls);
-
-   
-
-    // Check if recall has been done today
-    let hasRecallBeenDoneToday: any = [];
-    fetchedData?.recall.map((item) => {
-      if (differenceInDays(new Date(item.lastRecall), new Date()) === 0) {
-        hasRecallBeenDoneToday.push(item);
+    } else if (isStudyMode) {
+      // Sorting cards
+      let preSortedRecalls: any = [];
+      let filter: number = 3;
+      const recallNameArr1: Array<[string, number]> = [];
+      data.map((item) =>
+        item.flashCard.map((item2) => recallNameArr1.push([item2.name, filter]))
+      );
+      setsortedRecalls(recallNameArr1);
+      console.log("recallNameArr1", recallNameArr1);
+      if (sortedRecalls.length) {
+        setQuestion(sortedRecalls[count]![0]);
+        console.log(sortedRecalls[count]![0]);
       }
-    });
-    console.log("hasRecallBeenDoneToday ", hasRecallBeenDoneToday);
-    if (hasRecallBeenDoneToday.length) {
-      // Check if all recall's quality = 5. If so display a message telling it
-      setHasRecallBeenDoneToday(hasRecallBeenDoneToday.length);
-      setIsFilterMode(true);
+      setNumberOfQuestion(sortedRecalls.length);
+      // Keeping track of questions
+      if (numberOfQuestion === count) {
+        setCount(0);
+      }
     }
-  }, [fetchedData, count, render]);
-
-  // Synchronizing flashCards / recalls / count
-/*   useEffect(() => {
-   
-  }, [sortedRecalls, sortedRecallsFilterMode, numberOfQuestion, count]);
- */
-  // Keeping track of questions
-  useEffect(() => {
-    if (numberOfQuestion === count) {
-      setCount(0);
-    }
-  }, [count, numberOfQuestion, render]);
+  }, [status, count, isStudyMode]);
 
   // Switch between question and answer by changing display on element
   const handleFlip = () => {
@@ -550,7 +410,6 @@ const FlashCard = ({ data }: FlashData) => {
     setNextFlash();
 
     setShow(!show);
-    setRender(!render);
   };
   const handleUpdateRecall = (quality: number) => {
     // Parsing all recalls to get the current one
@@ -559,7 +418,7 @@ const FlashCard = ({ data }: FlashData) => {
 
       // Getting the current question
       const oldRecallData = hasQuestionRecall(fetchedData);
-      console.log(
+      /*    console.log(
         "oldRecallData",
         oldRecallData?.map((item) => {
           return {
@@ -568,8 +427,7 @@ const FlashCard = ({ data }: FlashData) => {
             repetitions: item.repetitions,
           };
         })
-      );
-      // Declaring variables
+      ); */
 
       // Check quality is between 1-5
       const qualityCheck = qualitySchema.safeParse(quality);
@@ -616,9 +474,6 @@ const FlashCard = ({ data }: FlashData) => {
 
       console.log("recallData in update", recallData);
       console.log("quality in update", quality);
-      // TODO
-      // Update old recall data
-      // score
 
       // Add the recall to the array if it's not been done today
       const isRecallDoneAlready: any = [];
@@ -628,6 +483,7 @@ const FlashCard = ({ data }: FlashData) => {
         }
       });
 
+      // Refactor this
       if (isRecallDoneAlready) {
         console.log("oldRecallData", oldRecallData);
         // Update recall with fresh data
@@ -694,7 +550,6 @@ const FlashCard = ({ data }: FlashData) => {
           });
         setNextFlash();
         setShow(!show);
-        setRender(!render);
       }
     }
   };
@@ -770,19 +625,21 @@ const FlashCard = ({ data }: FlashData) => {
                 >
                   {/* Flip icon & card count */}
                   <div className="flex flex-row justify-between p-2 p-2 text-sm uppercase">
-                    <button
-                      className=" text-sm font-bold uppercase tracking-wider"
-                      onClick={() => switchMode()}
-                    >
-                      {/* TODO: remove when user not signed in */}
-                      <p>
-                        {isStudyMode ? (
-                          <span className="text-green-300">Study mode</span>
-                        ) : (
-                          <span className="text-red-400">Test mode</span>
-                        )}
-                      </p>
-                    </button>
+                    {status === "authenticated" ? (
+                      <button
+                        className=" text-sm font-bold uppercase tracking-wider"
+                        onClick={() => switchMode()}
+                      >
+                        {/* TODO: remove when user not signed in */}
+                        <p>
+                          {isStudyMode ? (
+                            <span className="text-green-300">Study mode</span>
+                          ) : (
+                            <span className="text-red-400">Test mode</span>
+                          )}
+                        </p>
+                      </button>
+                    ) : null}
                     <div className="flex items-center justify-center">
                       <p>
                         {" "}
