@@ -63,9 +63,7 @@ const FlashCard = ({ data }: FlashData) => {
   const router = useRouter();
   const { status, data: session } = useSession();
   const [question, setQuestion] = useState<string>("");
-  const [isLast, setIsLast] = useState<boolean>(false);
   const [isFlip, setIsFlip] = useState<boolean>(false);
-  const [render, setRender] = useState<boolean>(false);
   const [hasRecallBeenDoneToday, setHasRecallBeenDoneToday] =
     useState<number>(0);
   const [count, setCount] = useState<number>(0);
@@ -234,7 +232,6 @@ const FlashCard = ({ data }: FlashData) => {
       if (numberOfQuestion === count) {
         setCount(0);
       }
-
     }
   }, [status, count, isStudyMode]);
 
@@ -245,21 +242,22 @@ const FlashCard = ({ data }: FlashData) => {
 
   // Go back to previous or next card by mutating count which is used by element to display card
   const setPrevFlash = () => {
-    setIsFlip(false);
-    setCount(count + 1);
+    if (count !== 0) {
+      setIsFlip(false);
+      setCount(count - 1);
+    }
   };
 
   // TODO : choose between normal sorted and filtered
   const setNextFlash = () => {
     if (isFilterMode) {
-
-        if (count >= sortedRecallsFilterMode.length - 1) {
-          setIsFlip(false);
-          setCount(0);
-        } else {
-          setIsFlip(false);
-          setCount(count + 1);
-        }
+      if (count >= sortedRecallsFilterMode.length - 1) {
+        setIsFlip(false);
+        setCount(0);
+      } else {
+        setIsFlip(false);
+        setCount(count + 1);
+      }
     } else {
       if (count === sortedRecalls.length - 1) {
         setIsFlip(false);
@@ -400,7 +398,7 @@ const FlashCard = ({ data }: FlashData) => {
 
       // Getting the current question
       const oldRecallData = hasQuestionRecall(fetchedData);
-   
+
       // Check quality is between 1-5
       const qualityCheck = qualitySchema.safeParse(quality);
       console.log("qualityCheck", qualityCheck);
@@ -744,7 +742,7 @@ const FlashCard = ({ data }: FlashData) => {
                 )
               ) : null}
             </div>
-            <div className="flex items-center w-full justify-center gap-5">
+            <div className="flex w-full items-center justify-center gap-5">
               <button
                 onClick={router.back}
                 className="rounded-full bg-white/60 px-5 py-3 font-semibold uppercase uppercase text-gray-500 no-underline transition hover:bg-white/20 md:px-10"
