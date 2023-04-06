@@ -18,7 +18,7 @@ const Decks = ({ decks }: AllDecks) => {
       <main className="flex min-h-screen flex-col items-center justify-center bg-gradient-to-b from-[#FFA36A] to-[#00d4ff]">
         {/* Nav */}
         <section className="intems-start flex h-full w-full text-white items-center">
-          <div className="space-between flex w-full flex-row items-center gap-5 p-5 md:gap-7 md:p-10">
+          <div className="space-between flex w-full flex-row items-center  gap-5 p-5 md:gap-7 md:p-10">
             <Link href={"/"}>
               <h1
                 className="pb-2 font-bold first-letter:text-7xl  

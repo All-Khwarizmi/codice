@@ -15,6 +15,7 @@ import { countingSort } from "~/Algorithm/countingSort";
 import { sm2 } from "../../../Algorithm/sm-2";
 import { addDays, differenceInDays, differenceInHours } from "date-fns";
 import { calendar, getNextRecallDay } from "lib/recallHelpers";
+import Link from "next/link";
 
 // Zod schema
 const recallsScquema = z.object({
@@ -62,7 +63,7 @@ const FlashCard = ({ data }: FlashData) => {
   // Checking if user is authenticated, redirecting otherwise
   const { status, data: session } = useSession();
 
-  
+
   const router = useRouter();
   const [question, setQuestion] = useState<string>("");
   const [isFlip, setIsFlip] = useState<boolean>(false);
@@ -553,15 +554,17 @@ const FlashCard = ({ data }: FlashData) => {
       <main className="flex min-h-screen flex-col items-center bg-gradient-to-b  from-[#FFA36A] to-[#00d4ff] text-slate-100">
         {/* Nav */}
         <section className="intems-start flex h-full w-full items-center">
-          <div className="space-between flex w-full flex-row items-center gap-5 p-5 md:gap-7 md:p-10">
-            <h1
-              className="pb-2 font-bold first-letter:text-7xl  
+          <div className="space-between flex w-full flex-row items-center  gap-5 p-5 md:gap-7 md:p-10">
+            <Link href={"/"}>
+              <h1
+                className="pb-2 font-bold first-letter:text-7xl  
   first-letter:font-bold first-letter:text-white first-line:uppercase
   first-line:tracking-widest md:text-5xl"
-            >
-              {" "}
-              Codice
-            </h1>
+              >
+                {" "}
+                Codice
+              </h1>
+            </Link>
             <div className="flex w-full items-center justify-end">
               <AuthShowcase />
             </div>
