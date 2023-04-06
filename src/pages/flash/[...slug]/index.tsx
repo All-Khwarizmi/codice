@@ -102,7 +102,7 @@ const FlashCard = ({ data }: FlashData) => {
         // env.NEXT_PUBLIC_API_GET_USER_TOPIC_RECALL_ENDPOINT
         console.log("Fetching fresh data when count changes");
         const dataRecall = fetch(
-          "http://localhost:3000/api/getUserTopicRecall",
+          env.NEXT_PUBLIC_API_GET_USER_TOPIC_RECALL_ENDPOINT,
           options
         )
           .then((response) => {
@@ -197,7 +197,7 @@ const FlashCard = ({ data }: FlashData) => {
                 // Check if all recall's quality = 5. If so display a message telling it
                 setHasRecallBeenDoneToday(hasRecallBeenDoneToday.length);
                 setIsFilterMode(true);
-               
+
                 console.log("setIsFilterMode(true)");
                 setNumberOfQuestion(sortedRecallsFilterModeVar.length);
                 console.log(
@@ -213,14 +213,12 @@ const FlashCard = ({ data }: FlashData) => {
                   setQuestion(sortedRecallsFilterModeVar[count]![0]);
                   console.log(sortedRecallsFilterModeVar[count]![0]);
                   setIsTestPossible(true);
-
-                  
                 }
               } else {
                 if (sortedRecallsFilterModeVar.length) {
                   setIsTestPossible(true);
-                   setQuestion(sortedRecallsFilterModeVar[count]![0]);
-                   console.log(sortedRecallsFilterModeVar[count]![0]);
+                  setQuestion(sortedRecallsFilterModeVar[count]![0]);
+                  console.log(sortedRecallsFilterModeVar[count]![0]);
                   console.log(" setIsTestPossible(true)");
                 }
               }
@@ -395,7 +393,7 @@ const FlashCard = ({ data }: FlashData) => {
       body: JSON.stringify(recallData),
     }; //NEXT_PUBLIC_API_ADD_RECALL_ENDPOINT
     // "http://localhost:3000/api/addRecall"
-    fetch("http://localhost:3000/api/addRecall", options)
+    fetch(env.NEXT_PUBLIC_API_ADD_RECALL_ENDPOINT, options)
       .then((response) => {
         console.log("Response in fetch Add recall with fresh data", response);
         if (quality === 5 && response.ok) {
@@ -496,7 +494,7 @@ const FlashCard = ({ data }: FlashData) => {
         };
         // "http://localhost:3000/api/updateRecall"
         // NEXT_PUBLIC_API_UPDATE_USER_RECALL_ENDPOINT
-        fetch("http://localhost:3000/api/updateRecall", options)
+        fetch(env.NEXT_PUBLIC_API_UPDATE_USER_RECALL_ENDPOINT, options)
           .then((response) => {
             console.log("Response in fetch update with fresh data", response);
             if (quality === 5 && response.ok) {
