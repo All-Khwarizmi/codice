@@ -606,7 +606,7 @@ const FlashCard = ({ data }: FlashData) => {
                   className={`${
                     !isStudyMode ? (!isTestPossible ? "hidden" : "") : ""
                   } ${flash.name === question ? "" : "hidden"}
-             h-72 min-h-min w-[95%] bg-white/10 text-slate-100 md:w-[75%] xl:w-[50%]`}
+              w-[95%] bg-white/10 text-slate-100 md:w-[75%] xl:w-[50%]`}
                   key={flash._key}
                 >
                   {/* Flip icon & card count */}
@@ -642,7 +642,7 @@ const FlashCard = ({ data }: FlashData) => {
                       show && "hidden"
                     } flex h-[70%] items-center justify-center  px-3 text-center`}
                   >
-                    <p className="w-[70%] pb-3 pt-5 text-lg md:text-2xl ">
+                    <p className="w-[70%] pb-10 pt-5 text-lg md:text-2xl ">
                       {" "}
                       {flash.question}{" "}
                     </p>
@@ -653,7 +653,7 @@ const FlashCard = ({ data }: FlashData) => {
                       !show && "hidden"
                     } flex h-[70%] items-center justify-center px-3 text-center`}
                   >
-                    <p className="w-[90%] pb-3 pt-5 text-lg md:w-[70%] md:text-2xl  ">
+                    <p className="w-[90%] pb-10 pt-5 text-lg md:w-[70%] md:text-2xl  ">
                       {" "}
                       {flash.reponse}{" "}
                     </p>
