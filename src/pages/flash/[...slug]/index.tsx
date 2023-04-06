@@ -60,8 +60,10 @@ type Quality = z.infer<typeof qualitySchema>;
 
 const FlashCard = ({ data }: FlashData) => {
   // Checking if user is authenticated, redirecting otherwise
-  const router = useRouter();
   const { status, data: session } = useSession();
+
+  
+  const router = useRouter();
   const [question, setQuestion] = useState<string>("");
   const [isFlip, setIsFlip] = useState<boolean>(false);
   const [hasRecallBeenDoneToday, setHasRecallBeenDoneToday] =
