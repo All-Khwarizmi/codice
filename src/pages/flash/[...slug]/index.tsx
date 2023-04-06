@@ -102,7 +102,7 @@ const FlashCard = ({ data }: FlashData) => {
         // env.NEXT_PUBLIC_API_GET_USER_TOPIC_RECALL_ENDPOINT
         console.log("Fetching fresh data when count changes");
         const dataRecall = fetch(
-          env.NEXT_PUBLIC_API_GET_USER_TOPIC_RECALL_ENDPOINT,
+          "http://localhost:3000/api/getUserTopicRecall",
           options
         )
           .then((response) => {
@@ -136,12 +136,32 @@ const FlashCard = ({ data }: FlashData) => {
                   safeData?.recall.map((recall) => {
                     if (recallNameArr2.indexOf(flashCard.name) !== -1) {
                       if (recall.questionName === flashCard.name) {
-                        if (recall.quality !== 5) {
+                        console.log(
+                          "differenceInDays(   new Date(recall.lastRecall), new Date())",
+                          differenceInDays(
+                            new Date(recall.lastRecall),
+                            new Date()
+                          )
+                        );
+                        if (
+                          differenceInDays(
+                            new Date(recall.lastRecall),
+                            new Date()
+                          ) > 1
+                        ) {
                           filterFilterMode = recall.quality;
                           return preSortedRecallsFilter.push([
                             flashCard.name,
                             filterFilterMode,
                           ]);
+                        } else {
+                          if (recall.quality !== 5) {
+                            filterFilterMode = recall.quality;
+                            return preSortedRecallsFilter.push([
+                              flashCard.name,
+                              filterFilterMode,
+                            ]);
+                          }
                         }
                       }
                     }
@@ -154,17 +174,20 @@ const FlashCard = ({ data }: FlashData) => {
                   }
                 })
               );
-              let sortedRecallsFilterMode = countingSort(
+              let sortedRecallsFilterModeVar = countingSort(
                 preSortedRecallsFilter
               );
 
-              setsortedRecallsFilterMode(sortedRecallsFilterMode);
-
+              setsortedRecallsFilterMode(sortedRecallsFilterModeVar);
+              console.log(
+                "sortedRecallsFilterModeVar ",
+                sortedRecallsFilterModeVar
+              );
               // Check if recall has been done today
               let hasRecallBeenDoneToday: any = [];
               safeData?.recall.map((item) => {
                 if (
-                  differenceInDays(new Date(item.lastRecall), new Date()) === 0
+                  differenceInDays(new Date(item.lastRecall), new Date()) < 1
                 ) {
                   hasRecallBeenDoneToday.push(item);
                 }
@@ -174,25 +197,38 @@ const FlashCard = ({ data }: FlashData) => {
                 // Check if all recall's quality = 5. If so display a message telling it
                 setHasRecallBeenDoneToday(hasRecallBeenDoneToday.length);
                 setIsFilterMode(true);
-                setNumberOfQuestion(sortedRecallsFilterMode.length);
-                if (sortedRecallsFilterMode.length !== 0) {
-                  setQuestion(sortedRecallsFilterMode[count]![0]);
-                  console.log(sortedRecallsFilterMode[count]![0]);
-                } else {
+               
+                console.log("setIsFilterMode(true)");
+                setNumberOfQuestion(sortedRecallsFilterModeVar.length);
+                console.log(
+                  "sortedRecallsFilterModeVar.length < 1",
+                  sortedRecallsFilterModeVar.length < 1
+                );
+                if (sortedRecallsFilterModeVar.length < 1) {
                   setIsTestPossible(false);
-                }
 
-                console.log("setIsTestPossible(false)");
-              } else {
-                if (sortedRecallsFilterMode.length) {
+                  console.log("setIsTestPossible(false)");
+                  console.log(sortedRecallsFilterModeVar[count]![0]);
+                } else {
+                  setQuestion(sortedRecallsFilterModeVar[count]![0]);
+                  console.log(sortedRecallsFilterModeVar[count]![0]);
                   setIsTestPossible(true);
+
+                  
+                }
+              } else {
+                if (sortedRecallsFilterModeVar.length) {
+                  setIsTestPossible(true);
+                   setQuestion(sortedRecallsFilterModeVar[count]![0]);
+                   console.log(sortedRecallsFilterModeVar[count]![0]);
+                  console.log(" setIsTestPossible(true)");
                 }
               }
 
               console.log("isFiltermode", isFilterMode);
               console.log(
-                "sortedRecallsFilterMode lenght",
-                sortedRecallsFilterMode.length
+                "sortedRecallsFilterModeVar lenght",
+                sortedRecallsFilterModeVar.length
               );
             } else if (!typedData.success) {
               setIsError(true);
@@ -203,15 +239,7 @@ const FlashCard = ({ data }: FlashData) => {
           .catch((error) => {
             console.log(error);
           })
-          .finally(() => {
-            console.log("count", count);
-            console.log("question", question);
-            console.log("sortedRecalls.length", sortedRecalls.length);
-            console.log(
-              "sortedRecallsFilterMode.length",
-              sortedRecallsFilterMode.length
-            );
-          });
+          .finally(() => {});
       }
     } else if (isStudyMode) {
       // Sorting cards
@@ -248,7 +276,7 @@ const FlashCard = ({ data }: FlashData) => {
     }
   };
 
-  // TODO : choose between normal sorted and filtered
+  // TODO : Refactor
   const setNextFlash = () => {
     if (isFilterMode) {
       if (count >= sortedRecallsFilterMode.length - 1) {
@@ -367,7 +395,7 @@ const FlashCard = ({ data }: FlashData) => {
       body: JSON.stringify(recallData),
     }; //NEXT_PUBLIC_API_ADD_RECALL_ENDPOINT
     // "http://localhost:3000/api/addRecall"
-    fetch(env.NEXT_PUBLIC_API_ADD_RECALL_ENDPOINT, options)
+    fetch("http://localhost:3000/api/addRecall", options)
       .then((response) => {
         console.log("Response in fetch Add recall with fresh data", response);
         if (quality === 5 && response.ok) {
@@ -468,7 +496,7 @@ const FlashCard = ({ data }: FlashData) => {
         };
         // "http://localhost:3000/api/updateRecall"
         // NEXT_PUBLIC_API_UPDATE_USER_RECALL_ENDPOINT
-        fetch(env.NEXT_PUBLIC_API_UPDATE_USER_RECALL_ENDPOINT, options)
+        fetch("http://localhost:3000/api/updateRecall", options)
           .then((response) => {
             console.log("Response in fetch update with fresh data", response);
             if (quality === 5 && response.ok) {
@@ -523,7 +551,7 @@ const FlashCard = ({ data }: FlashData) => {
     <>
       <Header />
       <main className="flex min-h-screen flex-col items-center bg-gradient-to-b  from-[#FFA36A] to-[#00d4ff] text-slate-100">
-        {/* Title */}
+        {/* Nav */}
         <section className="intems-start flex h-full w-full items-center">
           <div className="space-between flex w-full flex-row items-center gap-5 p-5 md:gap-7 md:p-10">
             <h1
@@ -553,6 +581,7 @@ const FlashCard = ({ data }: FlashData) => {
             </div>
           </div>
         </section>
+        {/* Title */}
         <section>
           <div className="pb-5 pt-10">
             {" "}
@@ -570,7 +599,7 @@ const FlashCard = ({ data }: FlashData) => {
           <div className="py-1"></div>
         </section>
         {/* Card */}
-        <section className="container grid grid-cols-1 place-items-center p-5">
+        <section className="container  grid grid-cols-1 place-items-center p-5">
           {data.map((item) =>
             item.flashCard.map((flash, index) => {
               //console.log(flash)
@@ -579,7 +608,7 @@ const FlashCard = ({ data }: FlashData) => {
                   className={`${
                     !isStudyMode ? (!isTestPossible ? "hidden" : "") : ""
                   } ${flash.name === question ? "" : "hidden"}
-            h-60 w-[95%] bg-white/10 text-slate-100 md:w-[75%] xl:w-[50%] `}
+             h-72 min-h-min w-[95%] bg-white/10 text-slate-100 md:w-[75%] xl:w-[50%]`}
                   key={flash._key}
                 >
                   {/* Flip icon & card count */}
@@ -613,9 +642,9 @@ const FlashCard = ({ data }: FlashData) => {
                   <div
                     className={`${
                       show && "hidden"
-                    } flex h-[70%] items-center justify-center px-3 text-center`}
+                    } flex h-[70%] items-center justify-center  px-3 text-center`}
                   >
-                    <p className="w-[70%] text-lg md:text-2xl ">
+                    <p className="w-[70%] pb-3 pt-5 text-lg md:text-2xl ">
                       {" "}
                       {flash.question}{" "}
                     </p>
@@ -626,7 +655,7 @@ const FlashCard = ({ data }: FlashData) => {
                       !show && "hidden"
                     } flex h-[70%] items-center justify-center px-3 text-center`}
                   >
-                    <p className="w-[90%] text-lg md:w-[70%] md:text-2xl  ">
+                    <p className="w-[90%] pb-3 pt-5 text-lg md:w-[70%] md:text-2xl  ">
                       {" "}
                       {flash.reponse}{" "}
                     </p>
