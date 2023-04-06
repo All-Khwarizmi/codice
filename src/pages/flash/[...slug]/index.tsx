@@ -493,7 +493,7 @@ const FlashCard = ({ data }: FlashData) => {
           body: JSON.stringify(recallData),
         };
         // "http://localhost:3000/api/updateRecall"
-        // NEXT_PUBLIC_API_UPDATE_USER_RECALL_ENDPOINT
+        // env.NEXT_PUBLIC_API_UPDATE_USER_RECALL_ENDPOINT
         fetch(env.NEXT_PUBLIC_API_UPDATE_USER_RECALL_ENDPOINT, options)
           .then((response) => {
             console.log("Response in fetch update with fresh data", response);
@@ -525,7 +525,7 @@ const FlashCard = ({ data }: FlashData) => {
           body: JSON.stringify(oldRecallData),
         };
         // "http://localhost:3000/api/updateRecall"
-        // NEXT_PUBLIC_API_UPDATE_USER_RECALL_ENDPOINT
+        // env.NEXT_PUBLIC_API_UPDATE_USER_RECALL_ENDPOINT
         fetch(env.NEXT_PUBLIC_API_UPDATE_USER_RECALL_ENDPOINT, options)
           .then((response) => {
             console.log("Response in fetch update with old data", response);
