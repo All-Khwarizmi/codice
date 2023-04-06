@@ -28,7 +28,7 @@ const Decks = ({ decks }: AllDecks) => {
                     alt={`${item.name} image`}
                   />
                   <div className="rounded-lg  rounded-t-none bg-slate-600">
-                    <div className="pl-5">
+                    <div className="px-5">
                       <p className="text-md pt-5 pb-3 font-bold uppercase">
                         {item.name}
                       </p>
