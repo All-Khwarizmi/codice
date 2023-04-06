@@ -76,5 +76,6 @@ export const getStaticProps = async () => {
     props: {
       decks,
     },
+    revalidate: 3600
   };
 };
