@@ -23,7 +23,7 @@ const Decks = ({ decks }: AllDecks) => {
                   }}
                 >
                   <img
-                    className="rounded-lg rounded-b-none"
+                    className="rounded-lg rounded-b-none w-full"
                     src={item.image?.asset.url}
                     alt={`${item.name} image`}
                   />
